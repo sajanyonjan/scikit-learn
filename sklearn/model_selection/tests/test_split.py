@@ -549,7 +549,7 @@ def test_stratified_shuffle_split_respects_test_size():
 def test_stratified_shuffle_split_iter():
     ys = [np.array([1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 3]),
           np.array([0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3]),
-          np.array([0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2] * 2),
+          np.array([0, 1, 2, 3] * 4 + [0, 1, 2]),
           np.array([1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4]),
           np.array([-1] * 800 + [1] * 50)
           ]
@@ -557,7 +557,8 @@ def test_stratified_shuffle_split_iter():
     for y in ys:
         sss = StratifiedShuffleSplit(6, test_size=0.33,
                                      random_state=0).split(np.ones(len(y)), y)
-        # this is how test-size is computed internally in _validate_shuffle_split
+        # this is how test-size is computed internally in
+        # _validate_shuffle_split
         test_size = np.ceil(0.33 * len(y))
         train_size = len(y) - test_size
         for train, test in sss:
@@ -609,9 +610,10 @@ def test_stratified_shuffle_split_even():
                     counter[id] += 1
         assert_equal(n_splits_actual, n_splits)
 
-        n_train, n_test = _validate_shuffle_split(n_samples,
-                                                  test_size=1. / n_folds,
-                                                  train_size=1. - (1. / n_folds))
+        n_train, n_test = _validate_shuffle_split(
+            n_samples,
+            test_size=1. / n_folds,
+            train_size=1. - (1. / n_folds))
 
         assert_equal(len(train), n_train)
         assert_equal(len(test), n_test)

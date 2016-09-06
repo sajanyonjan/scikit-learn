@@ -476,10 +476,22 @@ def test_stratified_shuffle_split_init():
     assert_raises(ValueError, cval.StratifiedShuffleSplit, y, test_size=2)
 
 
+def test_stratified_shuffle_split_respects_test_size():
+    y = np.array([0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2])
+    test_size = 5
+    train_size = 10
+    sss = cval.StratifiedShuffleSplit(y, 6, test_size=test_size,
+                                      train_size=train_size,
+                                      random_state=0)
+    for train, test in sss:
+        assert_equal(len(train), train_size)
+        assert_equal(len(test), test_size)
+
+
 def test_stratified_shuffle_split_iter():
     ys = [np.array([1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 3]),
           np.array([0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3]),
-          np.array([0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2]),
+          np.array([0, 1, 2, 3] * 4 + [0, 1, 2]),
           np.array([1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4]),
           np.array([-1] * 800 + [1] * 50)
           ]
@@ -487,15 +499,22 @@ def test_stratified_shuffle_split_iter():
     for y in ys:
         sss = cval.StratifiedShuffleSplit(y, 6, test_size=0.33,
                                           random_state=0)
+        # this is how test-size is computed internally in
+        # _validate_shuffle_split
+        test_size = np.ceil(0.33 * len(y))
+        train_size = len(y) - test_size
         for train, test in sss:
             assert_array_equal(np.unique(y[train]), np.unique(y[test]))
             # Checks if folds keep classes proportions
-            p_train = (np.bincount(np.unique(y[train], return_inverse=True)[1])
-                       / float(len(y[train])))
-            p_test = (np.bincount(np.unique(y[test], return_inverse=True)[1])
-                      / float(len(y[test])))
+            p_train = (np.bincount(np.unique(y[train],
+                                             return_inverse=True)[1]) /
+                       float(len(y[train])))
+            p_test = (np.bincount(np.unique(y[test], return_inverse=True)[1]) /
+                      float(len(y[test])))
             assert_array_almost_equal(p_train, p_test, 1)
-            assert_equal(y[train].size + y[test].size, y.size)
+            assert_equal(len(train) + len(test), y.size)
+            assert_equal(len(train), train_size)
+            assert_equal(len(test), test_size)
             assert_array_equal(np.intersect1d(train, test), [])
 
 
