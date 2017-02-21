@@ -63,6 +63,7 @@ from sklearn.linear_model import Ridge, SGDClassifier
 
 from sklearn.model_selection.tests.common import OneTimeSplitter
 
+from sklearn.externals.joblib import parallel_backend
 
 # Neither of the following two estimators inherit from BaseEstimator,
 # to test hyperparameter search on user-defined classifiers.
@@ -252,15 +253,17 @@ def test_grid_search_no_score():
     # Test grid-search on classifier that has no score function.
     clf = LinearSVC(random_state=0)
     X, y = make_blobs(random_state=0, centers=2)
-    Cs = [.1, 1, 10]
+    Cs = [0.1, 1., 10.]
     clf_no_score = LinearSVCNoScore(random_state=0)
-    grid_search = GridSearchCV(clf, {'C': Cs}, scoring='accuracy')
-    grid_search.fit(X, y)
+    cv = StratifiedKFold(random_state=0)
+    with parallel_backend('multiprocessing'):
+        grid_search = GridSearchCV(clf, {'C': Cs}, scoring='accuracy', cv=cv)
+        grid_search.fit(X, y)
 
-    grid_search_no_score = GridSearchCV(clf_no_score, {'C': Cs},
-                                        scoring='accuracy')
-    # smoketest grid search
-    grid_search_no_score.fit(X, y)
+        grid_search_no_score = GridSearchCV(clf, {'C': Cs},
+                                            scoring='accuracy', cv=cv)
+        # smoketest grid search
+        grid_search_no_score.fit(X, y)
 
     # check that best params are equal
     assert_equal(grid_search_no_score.best_params_, grid_search.best_params_)
