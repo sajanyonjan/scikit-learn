@@ -161,7 +161,7 @@ def check_paired_arrays(X, Y):
 
 # Pairwise distances
 def euclidean_distances(X, Y=None, Y_norm_squared=None, squared=False,
-                        X_norm_squared=None):
+                        X_norm_squared=None, check_arrays=True):
     """
     Considering the rows of X (and Y=X) as vectors, compute the
     distance matrix between each pair of vectors.
@@ -220,7 +220,8 @@ def euclidean_distances(X, Y=None, Y_norm_squared=None, squared=False,
     --------
     paired_distances : distances betweens pairs of elements of X and Y.
     """
-    X, Y = check_pairwise_arrays(X, Y)
+    if check_arrays:
+        X, Y = check_pairwise_arrays(X, Y)
 
     if X_norm_squared is not None:
         XX = check_array(X_norm_squared)
