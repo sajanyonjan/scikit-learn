@@ -75,6 +75,8 @@ def _yield_non_meta_checks(name, estimator):
     yield check_sample_weights_pandas_series
     yield check_sample_weights_list
     yield check_estimators_fit_returns_self
+    yield check_estimators_fit_returns_self_read_only
+
 
     # Check that all estimator yield informative messages when
     # trained on empty datasets
@@ -113,6 +115,7 @@ def _yield_classifier_checks(name, classifier):
     yield check_estimators_partial_fit_n_features
     # basic consistency testing
     yield check_classifiers_train
+    yield check_classifiers_train_read_only
     yield check_classifiers_regression_target
     if (name not in
         ["MultinomialNB", "LabelPropagation", "LabelSpreading"] and
@@ -160,6 +163,7 @@ def _yield_regressor_checks(name, regressor):
     # TODO: test with multiple responses
     # basic testing
     yield check_regressors_train
+    yield check_regressors_train_read_only
     yield check_regressor_data_not_an_array
     yield check_estimators_partial_fit_n_features
     yield check_regressors_no_decision_function
@@ -185,6 +189,7 @@ def _yield_transformer_checks(name, transformer):
                     'FunctionTransformer', 'Normalizer']:
         # basic tests
         yield check_transformer_general
+        yield check_transformer_general_read_only
         yield check_transformers_unfitted
     # Dependent on external solvers and hence accessing the iter
     # param is non-trivial.
@@ -200,6 +205,7 @@ def _yield_clustering_checks(name, clusterer):
         # this is clustering on the features
         # let's not test that here.
         yield check_clustering
+        yield check_clustering_read_only
         yield check_estimators_partial_fit_n_features
     yield check_non_transformer_estimators_n_iter
 
@@ -659,13 +665,26 @@ def check_fit1d_1sample(name, estimator_orig):
 
 
 @ignore_warnings(category=DeprecationWarning)
-def check_transformer_general(name, transformer):
+def check_transformer_general_helper(name, transformer, read_only):
     X, y = make_blobs(n_samples=30, centers=[[0, 0, 0], [1, 1, 1]],
                       random_state=0, n_features=2, cluster_std=0.1)
     X = StandardScaler().fit_transform(X)
     X -= X.min()
+
+    if read_only:
+        X.flags.writeable = False
+        y.flags.writeable = False
+
     _check_transformer(name, transformer, X, y)
     _check_transformer(name, transformer, X.tolist(), y.tolist())
+
+
+def check_transformer_general(name, transformer):
+    check_transformer_general_helper(name, transformer, read_only=False)
+
+
+def check_transformer_general_read_only(name, transformer):
+    check_transformer_general_helper(name, transformer, read_only=True)
 
 
 @ignore_warnings(category=DeprecationWarning)
@@ -991,7 +1010,7 @@ def check_estimators_partial_fit_n_features(name, estimator_orig):
 
 
 @ignore_warnings(category=DeprecationWarning)
-def check_clustering(name, clusterer_orig):
+def check_clustering_helper(name, clusterer_orig, read_only):
     clusterer = clone(clusterer_orig)
     X, y = make_blobs(n_samples=50, random_state=1)
     X, y = shuffle(X, y, random_state=7)
@@ -1004,6 +1023,9 @@ def check_clustering(name, clusterer_orig):
     if name == 'AffinityPropagation':
         clusterer.set_params(preference=-100)
         clusterer.set_params(max_iter=100)
+
+    if read_only:
+        X.flags.writeable = False
 
     # fit
     clusterer.fit(X)
@@ -1021,6 +1043,14 @@ def check_clustering(name, clusterer_orig):
     with warnings.catch_warnings(record=True):
         pred2 = clusterer.fit_predict(X)
     assert_array_equal(pred, pred2)
+
+
+def check_clustering(name, clusterer_orig):
+    check_clustering_helper(name, clusterer_orig, read_only=False)
+
+
+def check_clustering_read_only(name, clusterer_orig):
+    check_clustering_helper(name, clusterer_orig, read_only=True)
 
 
 @ignore_warnings(category=DeprecationWarning)
@@ -1075,7 +1105,7 @@ def check_classifiers_one_label(name, classifier_orig):
 
 
 @ignore_warnings  # Warnings are raised by decision function
-def check_classifiers_train(name, classifier_orig):
+def check_classifiers_train_helper(name, classifier_orig, read_only):
     X_m, y_m = make_blobs(n_samples=300, random_state=0)
     X_m, y_m = shuffle(X_m, y_m, random_state=7)
     X_m = StandardScaler().fit_transform(X_m)
@@ -1090,6 +1120,11 @@ def check_classifiers_train(name, classifier_orig):
         if name in ['BernoulliNB', 'MultinomialNB']:
             X -= X.min()
         set_random_state(classifier)
+
+        if read_only:
+            X.flags.writeable = False
+            y.flags.writeable = False
+
         # raises error on malformed input for fit
         assert_raises(ValueError, classifier.fit, X, y[:-1])
 
@@ -1146,8 +1181,16 @@ def check_classifiers_train(name, classifier_orig):
                 assert_array_equal(np.argsort(y_log_prob), np.argsort(y_prob))
 
 
+def check_classifiers_train(name, classifier_orig):
+    check_classifiers_train_helper(name, classifier_orig, read_only=False)
+
+
+def check_classifiers_train_read_only(name, classifier_orig):
+    check_classifiers_train_helper(name, classifier_orig, read_only=True)
+
+
 @ignore_warnings(category=DeprecationWarning)
-def check_estimators_fit_returns_self(name, estimator_orig):
+def check_estimators_fit_returns_self_helper(name, estimator_orig, read_only):
     """Check if self is returned when calling fit"""
     X, y = make_blobs(random_state=0, n_samples=9, n_features=4)
     # some want non-negative input
@@ -1158,7 +1201,21 @@ def check_estimators_fit_returns_self(name, estimator_orig):
 
     set_random_state(estimator)
 
+    if read_only:
+        X.flags.writeable = False
+        y.flags.writeable = False
+
     assert_true(estimator.fit(X, y) is estimator)
+
+
+def check_estimators_fit_returns_self(name, estimator_orig):
+    check_estimators_fit_returns_self_helper(name, estimator_orig,
+                                             read_only=False)
+
+
+def check_estimators_fit_returns_self_read_only(name, estimator_orig):
+    check_estimators_fit_returns_self_helper(name, estimator_orig,
+                                             read_only=True)
 
 
 @ignore_warnings
@@ -1288,7 +1345,7 @@ def check_regressors_int(name, regressor_orig):
 
 
 @ignore_warnings(category=DeprecationWarning)
-def check_regressors_train(name, regressor_orig):
+def check_regressors_train_helper(name, regressor_orig, read_only):
     X, y = _boston_subset()
     y = StandardScaler().fit_transform(y.reshape(-1, 1))  # X is already scaled
     y = y.ravel()
@@ -1310,6 +1367,11 @@ def check_regressors_train(name, regressor_orig):
     else:
         y_ = y
     set_random_state(regressor)
+
+    if read_only:
+        X.flags.writeable = False
+        y_.flags.writeable = False
+
     regressor.fit(X, y_)
     regressor.fit(X.tolist(), y_.tolist())
     y_pred = regressor.predict(X)
@@ -1320,6 +1382,14 @@ def check_regressors_train(name, regressor_orig):
     # skipped
     if name not in ('PLSCanonical', 'CCA', 'RANSACRegressor'):
         assert_greater(regressor.score(X, y_), 0.5)
+
+
+def check_regressors_train(name, regressor_orig):
+    check_regressors_train_helper(name, regressor_orig, read_only=False)
+
+
+def check_regressors_train_read_only(name, regressor_orig):
+    check_regressors_train_helper(name, regressor_orig, read_only=True)
 
 
 @ignore_warnings
