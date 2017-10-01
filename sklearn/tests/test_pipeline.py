@@ -1,6 +1,4 @@
-"""
-Test the pipeline module.
-"""
+# --
 
 from tempfile import mkdtemp
 import shutil
@@ -47,8 +45,7 @@ JUNK_FOOD_DOCS = (
 
 
 class NoFit(object):
-    """Small class to test parameter dispatching.
-    """
+    # --
 
     def __init__(self, a=None, b=None):
         self.a = a
@@ -111,8 +108,7 @@ class Mult(BaseEstimator):
 
 
 class FitParamT(BaseEstimator):
-    """Mock classifier
-    """
+    # --
 
     def __init__(self):
         self.successful = False
@@ -134,7 +130,7 @@ class FitParamT(BaseEstimator):
 
 
 class DummyTransf(Transf):
-    """Transformer which store the column means"""
+    # --
 
     def fit(self, X, y):
         self.means_ = np.mean(X, axis=0)

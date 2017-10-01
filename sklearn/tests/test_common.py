@@ -1,6 +1,4 @@
-"""
-General tests for all estimators in sklearn.
-"""
+# --
 
 # Authors: Andreas Mueller <amueller@ais.uni-bonn.de>
 #          Gael Varoquaux gael.varoquaux@normalesup.org

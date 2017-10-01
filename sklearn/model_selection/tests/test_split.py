@@ -1,4 +1,4 @@
-"""Test the split module"""
+# --
 from __future__ import division
 import warnings
 
@@ -75,7 +75,7 @@ digits = load_digits()
 
 
 class MockClassifier(object):
-    """Dummy classifier to test the cross-validation"""
+    # --
 
     def __init__(self, a=0, allow_nd=False):
         self.a = a
@@ -84,13 +84,7 @@ class MockClassifier(object):
     def fit(self, X, Y=None, sample_weight=None, class_prior=None,
             sparse_sample_weight=None, sparse_param=None, dummy_int=None,
             dummy_str=None, dummy_obj=None, callback=None):
-        """The dummy arguments are to test that this fit function can
-        accept non-array arguments through cross-validation, such as:
-            - int
-            - str (this is actually array-like)
-            - object
-            - function
-        """
+        # --
         self.dummy_int = dummy_int
         self.dummy_str = dummy_str
         self.dummy_obj = dummy_obj

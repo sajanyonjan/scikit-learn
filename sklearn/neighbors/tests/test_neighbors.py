@@ -50,9 +50,7 @@ neighbors.radius_neighbors_graph = ignore_warnings(
 
 
 def _weight_func(dist):
-    """ Weight function to replace lambda d: d ** -2.
-    The lambda function is not valid because:
-    if d==0 then 0^-2 is not valid. """
+    # --
 
     # Dist could be multidimensional, flatten it so all values
     # can be looped
@@ -108,7 +106,7 @@ def test_unsupervised_inputs():
 
 
 def test_precomputed(random_state=42):
-    """Tests unsupervised NearestNeighbors with a distance matrix."""
+    # --
     # Note: smaller samples may result in spurious test success
     rng = np.random.RandomState(random_state)
     X = rng.random_sample((10, 4))
@@ -430,11 +428,7 @@ def test_neighbors_regressors_zero_distance():
 
 
 def test_radius_neighbors_boundary_handling():
-    """Test whether points lying on boundary are handled consistently
-
-    Also ensures that even with only one query point, an object array
-    is returned rather than a 2d array.
-    """
+    # --
 
     X = np.array([[1.5], [3.0], [3.01]])
     radius = 3.0
@@ -1245,8 +1239,7 @@ def test_same_knn_parallel():
         clf.fit(X_train, y_train)
         y_parallel = clf.predict(X_test)
         dist_parallel, ind_parallel = clf.kneighbors(X_test)
-        graph_parallel = \
-            clf.kneighbors_graph(X_test, mode='distance').toarray()
+        graph_parallel =            clf.kneighbors_graph(X_test, mode='distance').toarray()
 
         assert_array_equal(y, y_parallel)
         assert_array_almost_equal(dist, dist_parallel)

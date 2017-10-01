@@ -440,8 +440,7 @@ def test_classifier_chain_random_order():
     assert_equal(len(classifier_chain_random.order_), 4)
     assert_equal(len(set(classifier_chain_random.order_)), 4)
 
-    classifier_chain_fixed = \
-        ClassifierChain(LogisticRegression(),
+    classifier_chain_fixed =        ClassifierChain(LogisticRegression(),
                         order=classifier_chain_random.order_)
     classifier_chain_fixed.fit(X, Y)
     Y_pred_fixed = classifier_chain_fixed.predict(X)

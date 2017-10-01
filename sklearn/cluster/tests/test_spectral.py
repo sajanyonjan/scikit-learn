@@ -1,4 +1,4 @@
-"""Testing for Spectral Clustering methods"""
+# --
 
 from sklearn.externals.six.moves import cPickle
 

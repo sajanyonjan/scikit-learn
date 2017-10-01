@@ -1,4 +1,4 @@
-"""Testing for kernels for Gaussian processes."""
+# --
 
 # Author: Jan Hendrik Metzen <jhm@informatik.uni-bremen.de>
 # License: BSD 3 clause
@@ -9,10 +9,8 @@ import numpy as np
 
 from sklearn.gaussian_process.kernels import _approx_fprime
 
-from sklearn.metrics.pairwise \
-    import PAIRWISE_KERNEL_FUNCTIONS, euclidean_distances, pairwise_kernels
-from sklearn.gaussian_process.kernels \
-    import (RBF, Matern, RationalQuadratic, ExpSineSquared, DotProduct,
+from sklearn.metrics.pairwise    import PAIRWISE_KERNEL_FUNCTIONS, euclidean_distances, pairwise_kernels
+from sklearn.gaussian_process.kernels    import (RBF, Matern, RationalQuadratic, ExpSineSquared, DotProduct,
             ConstantKernel, WhiteKernel, PairwiseKernel, KernelOperator,
             Exponentiation)
 from sklearn.base import clone
@@ -62,8 +60,7 @@ def test_kernel_gradient():
             K = kernel_clone(X, eval_gradient=False)
             return K
 
-        K_gradient_approx = \
-            _approx_fprime(kernel.theta, eval_kernel_for_theta, 1e-10)
+        K_gradient_approx =            _approx_fprime(kernel.theta, eval_kernel_for_theta, 1e-10)
 
         assert_almost_equal(K_gradient, K_gradient_approx, 4)
 
@@ -71,8 +68,7 @@ def test_kernel_gradient():
 def test_kernel_theta():
     # Check that parameter vector theta of kernel is set correctly.
     for kernel in kernels:
-        if isinstance(kernel, KernelOperator) \
-           or isinstance(kernel, Exponentiation):  # skip non-basic kernels
+        if isinstance(kernel, KernelOperator)           or isinstance(kernel, Exponentiation):  # skip non-basic kernels
             continue
         theta = kernel.theta
         _, K_gradient = kernel(X, eval_gradient=True)

@@ -1,4 +1,4 @@
-"""Testing for the boost module (sklearn.ensemble.boost)."""
+# --
 
 import numpy as np
 from sklearn.utils.testing import assert_array_equal, assert_array_less
@@ -119,8 +119,7 @@ def test_iris():
         assert_equal(clf.decision_function(iris.data).shape[1], len(classes))
 
         score = clf.score(iris.data, iris.target)
-        assert score > 0.9, "Failed with algorithm %s and score = %f" % \
-            (alg, score)
+        assert score > 0.9, "Failed with algorithm %s and score = %f" %            (alg, score)
 
         # Check we used multiple estimators
         assert_greater(len(clf.estimators_), 1)
@@ -321,10 +320,10 @@ def test_sparse_classification():
     # Check classification with sparse input.
 
     class CustomSVC(SVC):
-        """SVC variant that records the nature of the training set."""
+        # --
 
         def fit(self, X, y, sample_weight=None):
-            """Modification on fit caries data type for later verification."""
+            # --
             super(CustomSVC, self).fit(X, y, sample_weight=sample_weight)
             self.data_type_ = type(X)
             return self
@@ -418,10 +417,10 @@ def test_sparse_regression():
     # Check regression with sparse input.
 
     class CustomSVR(SVR):
-        """SVR variant that records the nature of the training set."""
+        # --
 
         def fit(self, X, y, sample_weight=None):
-            """Modification on fit caries data type for later verification."""
+            # --
             super(CustomSVR, self).fit(X, y, sample_weight=sample_weight)
             self.data_type_ = type(X)
             return self
@@ -466,12 +465,7 @@ def test_sparse_regression():
 
 
 def test_sample_weight_adaboost_regressor():
-    """
-    AdaBoostRegressor should work without sample_weights in the base estimator
-
-    The random weighted sampling is done internally in the _boost method in
-    AdaBoostRegressor.
-    """
+    # --
     class DummyEstimator(BaseEstimator):
 
         def fit(self, X, y):

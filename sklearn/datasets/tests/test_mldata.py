@@ -1,4 +1,4 @@
-"""Test functionality of mldata fetching utilities."""
+# --
 
 import os
 import shutil
@@ -43,7 +43,7 @@ def test_mldata_filename():
 
 
 def test_download():
-    """Test that fetch_mldata is able to download and cache a data set."""
+    # --
     setup_tmpdata()
     _urlopen_ref = datasets.mldata.urlopen
     datasets.mldata.urlopen = mock_mldata_urlopen({

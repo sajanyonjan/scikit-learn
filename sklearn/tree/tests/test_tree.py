@@ -1,6 +1,4 @@
-"""
-Testing for the tree module (sklearn.tree).
-"""
+# --
 import copy
 import pickle
 from functools import partial
@@ -567,7 +565,7 @@ def test_error():
 
 
 def test_min_samples_split():
-    """Test min_samples_split parameter"""
+    # --
     X = np.asfortranarray(iris.data.astype(tree._tree.DTYPE))
     y = iris.target
 
@@ -635,8 +633,7 @@ def test_min_samples_leaf():
 
 
 def check_min_weight_fraction_leaf(name, datasets, sparse=False):
-    """Test if leaves contain at least min_weight_fraction_leaf of the
-    training set"""
+    # --
     if sparse:
         X = DATASETS[datasets]["X_sparse"].astype(np.float32)
     else:
@@ -709,8 +706,7 @@ def test_min_weight_fraction_leaf():
 
 def check_min_weight_fraction_leaf_with_min_samples_leaf(name, datasets,
                                                          sparse=False):
-    """Test the interaction between min_weight_fraction_leaf and min_samples_leaf
-    when sample_weights is not provided in fit."""
+    # --
     if sparse:
         X = DATASETS[datasets]["X_sparse"].astype(np.float32)
     else:
@@ -1132,7 +1128,7 @@ def test_sample_weight_invalid():
 
 
 def check_class_weights(name):
-    """Check class_weights resemble sample_weights behavior."""
+    # --
     TreeClassifier = CLF_TREES[name]
 
     # Iris is balanced, so no effect expected for using 'balanced' weights

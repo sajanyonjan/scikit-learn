@@ -1,7 +1,4 @@
-"""
-Several basic tests for hierarchical clustering procedures
-
-"""
+# --
 # Authors: Vincent Michel, 2010, Gael Varoquaux 2012,
 #          Matteo Visconti di Oleggio Castello 2014
 # License: BSD 3 clause
@@ -26,8 +23,7 @@ from sklearn.cluster import AgglomerativeClustering, FeatureAgglomeration
 from sklearn.cluster.hierarchical import (_hc_cut, _TREE_BUILDERS,
                                           linkage_tree)
 from sklearn.feature_extraction.image import grid_to_graph
-from sklearn.metrics.pairwise import PAIRED_DISTANCES, cosine_distances,\
-    manhattan_distances, pairwise_distances
+from sklearn.metrics.pairwise import PAIRED_DISTANCES, cosine_distances,    manhattan_distances, pairwise_distances
 from sklearn.metrics.cluster import normalized_mutual_info_score
 from sklearn.neighbors.graph import kneighbors_graph
 from sklearn.cluster._hierarchical import average_merge, max_merge
@@ -81,8 +77,7 @@ def test_structured_linkage_tree():
     X = rng.randn(50, 100)
     connectivity = grid_to_graph(*mask.shape)
     for tree_builder in _TREE_BUILDERS.values():
-        children, n_components, n_leaves, parent = \
-            tree_builder(X.T, connectivity)
+        children, n_components, n_leaves, parent =            tree_builder(X.T, connectivity)
         n_nodes = 2 * X.shape[1] - 1
         assert_true(len(children) + n_leaves == n_nodes)
         # Check that ward_tree raises a ValueError with a connectivity matrix
@@ -249,7 +244,7 @@ def test_ward_agglomeration():
 
 
 def assess_same_labelling(cut1, cut2):
-    """Util for comparison with scipy"""
+    # --
     co_clust = []
     for cut in [cut1, cut2]:
         n = len(cut)

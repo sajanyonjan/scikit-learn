@@ -1,4 +1,4 @@
-"""Test the search module"""
+# --
 
 from collections import Iterable, Sized
 from sklearn.externals.six.moves import cStringIO as StringIO
@@ -72,7 +72,7 @@ from sklearn.model_selection.tests.common import OneTimeSplitter
 # Neither of the following two estimators inherit from BaseEstimator,
 # to test hyperparameter search on user-defined classifiers.
 class MockClassifier(object):
-    """Dummy classifier to test the parameter search algorithms"""
+    # --
     def __init__(self, foo_param=0):
         self.foo_param = foo_param
 
@@ -110,7 +110,7 @@ class MockClassifier(object):
 
 
 class LinearSVCNoScore(LinearSVC):
-    """An LinearSVC classifier that has no score method."""
+    # --
     @property
     def score(self):
         raise AttributeError
@@ -596,7 +596,7 @@ def test_grid_search_precomputed_kernel_error_nonsquare():
 
 
 class BrokenClassifier(BaseEstimator):
-    """Broken classifier that cannot be fit twice"""
+    # --
 
     def __init__(self, parameter=None):
         self.parameter = parameter
@@ -1040,8 +1040,7 @@ def test_random_search_cv_results_multimetric():
 
 def compare_cv_results_multimetric_with_single(
         search_multi, search_acc, search_rec, iid):
-    """Compare multi-metric cv_results with the ensemble of multiple
-    single metric cv_results from single metric grid/random search"""
+    # --
 
     assert_equal(search_multi.iid, iid)
     assert_true(search_multi.multimetric_)
@@ -1070,7 +1069,7 @@ def compare_cv_results_multimetric_with_single(
 
 
 def compare_refit_methods_when_refit_with_acc(search_multi, search_acc, refit):
-    """Compare refit multi-metric search methods with single metric methods"""
+    # --
     if refit:
         assert_equal(search_multi.refit, 'accuracy')
     else:
@@ -1298,7 +1297,7 @@ def test_grid_search_allows_nans():
 
 
 class FailingClassifier(BaseEstimator):
-    """Classifier that raises a ValueError on fit()"""
+    # --
 
     FAILING_PARAMETER = 2
 

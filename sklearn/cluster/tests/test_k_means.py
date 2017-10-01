@@ -1,4 +1,4 @@
-"""Testing for K-means"""
+# --
 import sys
 
 import numpy as np
@@ -751,7 +751,7 @@ def test_k_means_function():
 
 
 def test_x_squared_norms_init_centroids():
-    """Test that x_squared_norms can be None in _init_centroids"""
+    # --
     from sklearn.cluster.k_means_ import _init_centroids
 
     X_norms = np.sum(X**2, axis=1)
@@ -864,6 +864,5 @@ def test_sparse_validate_centers():
     # Test that a ValueError is raised for validate_center_shape
     classifier = KMeans(n_clusters=3, init=centers, n_init=1)
 
-    msg = "The shape of the initial centers \(\(4L?, 4L?\)\) " \
-          "does not match the number of clusters 3"
+    msg = "The shape of the initial centers \(\(4L?, 4L?\)\) "          "does not match the number of clusters 3"
     assert_raises_regex(ValueError, msg, classifier.fit, X)

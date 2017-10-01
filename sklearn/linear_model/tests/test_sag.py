@@ -303,7 +303,7 @@ def test_regressor_matching():
 
 @ignore_warnings
 def test_sag_pobj_matches_logistic_regression():
-    """tests if the sag pobj matches log reg"""
+    # --
     n_samples = 100
     alpha = 1.0
     max_iter = 20
@@ -333,7 +333,7 @@ def test_sag_pobj_matches_logistic_regression():
 
 @ignore_warnings
 def test_sag_pobj_matches_ridge_regression():
-    """tests if the sag pobj matches ridge reg"""
+    # --
     n_samples = 100
     n_features = 10
     alpha = 1.0
@@ -365,7 +365,7 @@ def test_sag_pobj_matches_ridge_regression():
 
 @ignore_warnings
 def test_sag_regressor_computed_correctly():
-    """tests if the sag regressor is computed correctly"""
+    # --
     alpha = .1
     n_features = 10
     n_samples = 40
@@ -454,7 +454,7 @@ def test_get_auto_step_size():
 
 @ignore_warnings
 def test_sag_regressor():
-    """tests if the sag regressor performs well"""
+    # --
     xmin, xmax = -5, 5
     n_samples = 20
     tol = .001
@@ -493,7 +493,7 @@ def test_sag_regressor():
 
 @ignore_warnings
 def test_sag_classifier_computed_correctly():
-    """tests if the binary classifier is computed correctly"""
+    # --
     alpha = .1
     n_samples = 50
     n_iter = 50
@@ -536,7 +536,7 @@ def test_sag_classifier_computed_correctly():
 
 @ignore_warnings
 def test_sag_multiclass_computed_correctly():
-    """tests if the multiclass classifier is computed correctly"""
+    # --
     alpha = .1
     n_samples = 20
     tol = .00001
@@ -595,7 +595,7 @@ def test_sag_multiclass_computed_correctly():
 
 @ignore_warnings
 def test_classifier_results():
-    """tests if classifier results match target"""
+    # --
     alpha = .1
     n_features = 20
     n_samples = 10
@@ -620,7 +620,7 @@ def test_classifier_results():
 
 @ignore_warnings
 def test_binary_classifier_class_weight():
-    """tests binary classifier with classweights for each class"""
+    # --
     alpha = .1
     n_samples = 50
     n_iter = 20
@@ -670,7 +670,7 @@ def test_binary_classifier_class_weight():
 
 @ignore_warnings
 def test_multiclass_classifier_class_weight():
-    """tests multiclass with classweights for each class"""
+    # --
     alpha = .1
     n_samples = 20
     tol = .00001
@@ -732,7 +732,7 @@ def test_multiclass_classifier_class_weight():
 
 
 def test_classifier_single_class():
-    """tests if ValueError is thrown with only one class"""
+    # --
     X = [[1, 2], [3, 4]]
     y = [1, 1]
 

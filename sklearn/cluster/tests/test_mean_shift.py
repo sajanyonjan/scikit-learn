@@ -1,7 +1,4 @@
-"""
-Testing for mean shift clustering methods
-
-"""
+# --
 
 import numpy as np
 import warnings

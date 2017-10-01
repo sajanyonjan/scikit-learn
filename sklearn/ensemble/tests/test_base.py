@@ -1,6 +1,4 @@
-"""
-Testing for the base module (sklearn.ensemble.base).
-"""
+# --
 
 # Authors: Gilles Louppe
 # License: BSD 3 clause

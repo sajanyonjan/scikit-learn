@@ -1,4 +1,4 @@
-"""Common tests for metaestimators"""
+# --
 
 import functools
 

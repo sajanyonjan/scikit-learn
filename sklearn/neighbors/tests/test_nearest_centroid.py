@@ -1,6 +1,4 @@
-"""
-Testing for the nearest centroid module.
-"""
+# --
 
 import numpy as np
 from scipy import sparse as sp

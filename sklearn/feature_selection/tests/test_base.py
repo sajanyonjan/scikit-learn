@@ -10,7 +10,7 @@ from sklearn.utils.testing import assert_raises, assert_equal
 
 
 class StepSelector(SelectorMixin, BaseEstimator):
-    """Retain every `step` features (beginning with 0)"""
+    # --
     def __init__(self, step=2):
         self.step = step
 

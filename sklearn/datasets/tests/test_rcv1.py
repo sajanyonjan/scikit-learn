@@ -1,7 +1,4 @@
-"""Test the rcv1 loader.
-
-Skipped if rcv1 is not already downloaded to data_home.
-"""
+# --
 
 import errno
 import scipy.sparse as sp

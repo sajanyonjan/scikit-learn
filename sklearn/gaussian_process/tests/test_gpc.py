@@ -1,4 +1,4 @@
-"""Testing for Gaussian process classification """
+# --
 
 # Author: Jan Hendrik Metzen <jhm@informatik.uni-bremen.de>
 # License: BSD 3 clause
@@ -66,8 +66,7 @@ def test_converged_to_local_maximum():
             continue
         gpc = GaussianProcessClassifier(kernel=kernel).fit(X, y)
 
-        lml, lml_gradient = \
-            gpc.log_marginal_likelihood(gpc.kernel_.theta, True)
+        lml, lml_gradient =            gpc.log_marginal_likelihood(gpc.kernel_.theta, True)
 
         assert_true(np.all((np.abs(lml_gradient) < 1e-4) |
                            (gpc.kernel_.theta == gpc.kernel_.bounds[:, 0]) |
@@ -80,8 +79,7 @@ def test_lml_gradient():
         gpc = GaussianProcessClassifier(kernel=kernel).fit(X, y)
 
         lml, lml_gradient = gpc.log_marginal_likelihood(kernel.theta, True)
-        lml_gradient_approx = \
-            approx_fprime(kernel.theta,
+        lml_gradient_approx =            approx_fprime(kernel.theta,
                           lambda theta: gpc.log_marginal_likelihood(theta,
                                                                     False),
                           1e-10)
@@ -97,8 +95,7 @@ def test_random_starts():
     X = rng.randn(n_samples, n_features) * 2 - 1
     y = (np.sin(X).sum(axis=1) + np.sin(3 * X).sum(axis=1)) > 0
 
-    kernel = C(1.0, (1e-2, 1e2)) \
-        * RBF(length_scale=[1e-3] * n_features,
+    kernel = C(1.0, (1e-2, 1e2))        * RBF(length_scale=[1e-3] * n_features,
               length_scale_bounds=[(1e-4, 1e+2)] * n_features)
     last_lml = -np.inf
     for n_restarts_optimizer in range(5):
@@ -115,8 +112,7 @@ def test_custom_optimizer():
     # Define a dummy optimizer that simply tests 50 random hyperparameters
     def optimizer(obj_func, initial_theta, bounds):
         rng = np.random.RandomState(0)
-        theta_opt, func_min = \
-            initial_theta, obj_func(initial_theta, eval_gradient=False)
+        theta_opt, func_min =            initial_theta, obj_func(initial_theta, eval_gradient=False)
         for _ in range(50):
             theta = np.atleast_1d(rng.uniform(np.maximum(-2, bounds[:, 0]),
                                               np.minimum(1, bounds[:, 1])))

@@ -252,7 +252,7 @@ def test_preserve_trustworthiness_approximately():
 
 
 def test_optimization_minimizes_kl_divergence():
-    """t-SNE should give a lower KL divergence with more iterations."""
+    # --
     random_state = check_random_state(0)
     X, _ = make_blobs(n_features=3, random_state=random_state)
     kl_divergences = []
@@ -608,8 +608,7 @@ def test_barnes_hut_angle():
         neighbors_nn = neighbors_nn[:, 1:]
         distances_nn = np.array([distances[i, neighbors_nn[i]]
                                  for i in range(n_samples)])
-        assert np.all(distances[0, neighbors_nn[0]] == distances_nn[0]),\
-            abs(distances[0, neighbors_nn[0]] - distances_nn[0])
+        assert np.all(distances[0, neighbors_nn[0]] == distances_nn[0]),            abs(distances[0, neighbors_nn[0]] - distances_nn[0])
         P_bh = _joint_probabilities_nn(distances_nn, neighbors_nn,
                                        perplexity, verbose=0)
         kl_bh, grad_bh = _kl_divergence_bh(params, P_bh, degrees_of_freedom,
@@ -683,8 +682,7 @@ def test_min_grad_norm():
 
     # Compute how often the gradient norm is smaller than min_grad_norm
     gradient_norm_values = np.array(gradient_norm_values)
-    n_smaller_gradient_norms = \
-        len(gradient_norm_values[gradient_norm_values <= min_grad_norm])
+    n_smaller_gradient_norms =        len(gradient_norm_values[gradient_norm_values <= min_grad_norm])
 
     # The gradient norm can be smaller than min_grad_norm at most once,
     # because in the moment it becomes smaller the optimization stops
@@ -719,17 +717,7 @@ def test_accessible_kl_divergence():
 
 
 def check_uniform_grid(method, seeds=[0, 1, 2], n_iter=1000):
-    """Make sure that TSNE can approximately recover a uniform 2D grid
-
-    Due to ties in distances between point in X_2d_grid, this test is platform
-    dependent for ``method='barnes_hut'`` due to numerical imprecision.
-
-    Also, t-SNE is not assured to converge to the right solution because bad
-    initialization can lead to convergence to bad local minimum (the
-    optimization problem is non-convex). To avoid breaking the test too often,
-    we re-run t-SNE from the final point when the convergence is not good
-    enough.
-    """
+    # --
     for seed in seeds:
         tsne = TSNE(n_components=2, init='random', random_state=seed,
                     perplexity=20, n_iter=n_iter, method=method)

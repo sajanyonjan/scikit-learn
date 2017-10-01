@@ -235,7 +235,7 @@ def test_nystroem_callable():
     X = rnd.uniform(size=(n_samples, 4))
 
     def logging_histogram_kernel(x, y, log):
-        """Histogram kernel that writes to a log."""
+        # --
         log.append(1)
         return np.minimum(x, y).sum()
 

@@ -137,23 +137,7 @@ def test_isotonic_regression_ties_max():
 
 
 def test_isotonic_regression_ties_secondary_():
-    """
-    Test isotonic regression fit, transform  and fit_transform
-    against the "secondary" ties method and "pituitary" data from R
-     "isotone" package, as detailed in: J. d. Leeuw, K. Hornik, P. Mair,
-     Isotone Optimization in R: Pool-Adjacent-Violators Algorithm
-    (PAVA) and Active Set Methods
-
-    Set values based on pituitary example and
-     the following R command detailed in the paper above:
-    > library("isotone")
-    > data("pituitary")
-    > res1 <- gpava(pituitary$age, pituitary$size, ties="secondary")
-    > res1$x
-
-    `isotone` version: 1.0-2, 2014-09-07
-    R version: R version 3.1.1 (2014-07-10)
-    """
+    # --
     x = [8, 8, 8, 10, 10, 10, 12, 12, 12, 14, 14]
     y = [21, 23.5, 23, 24, 21, 25, 21.5, 22, 19, 23.5, 25]
     y_true = [22.22222, 22.22222, 22.22222, 22.22222, 22.22222, 22.22222,
@@ -167,20 +151,7 @@ def test_isotonic_regression_ties_secondary_():
 
 
 def test_isotonic_regression_with_ties_in_differently_sized_groups():
-    """
-    Non-regression test to handle issue 9432:
-    https://github.com/scikit-learn/scikit-learn/issues/9432
-
-    Compare against output in R:
-    > library("isotone")
-    > x <- c(0, 1, 1, 2, 3, 4)
-    > y <- c(0, 0, 1, 0, 0, 1)
-    > res1 <- gpava(x, y, ties="secondary")
-    > res1$x
-
-    `isotone` version: 1.1-0, 2015-07-24
-    R version: R version 3.3.2 (2016-10-31)
-    """
+    # --
     x = np.array([0, 1, 1, 2, 3, 4])
     y = np.array([0, 0, 1, 0, 0, 1])
     y_true = np.array([0., 0.25, 0.25, 0.25, 0.25, 1.])

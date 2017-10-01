@@ -1,8 +1,4 @@
-"""
-Testing for the approximate neighbor search using
-Locality Sensitive Hashing Forest module
-(sklearn.neighbors.LSHForest).
-"""
+# --
 
 # Author: Maheshakya Wijewardena, Joel Nothman
 

@@ -1,12 +1,4 @@
-"""This test for the LFW require medium-size data downloading and processing
-
-If the data has not been already downloaded by running the examples,
-the tests won't run (skipped).
-
-If the test are run, the first execution will be long (typically a bit
-more than a couple of minutes) but as the dataset loader is leveraging
-joblib, successive runs will be fast (less than 200ms).
-"""
+# --
 
 import random
 import os
@@ -47,7 +39,7 @@ FAKE_NAMES = [
 
 
 def setup_module():
-    """Test fixture run once and common to all tests of this module"""
+    # --
     if imsave is None:
         raise SkipTest("PIL not installed.")
 
@@ -103,7 +95,7 @@ def setup_module():
 
 
 def teardown_module():
-    """Test fixture (clean up) run once after all tests of this module"""
+    # --
     if os.path.isdir(SCIKIT_LEARN_DATA):
         shutil.rmtree(SCIKIT_LEARN_DATA)
     if os.path.isdir(SCIKIT_LEARN_EMPTY_DATA):

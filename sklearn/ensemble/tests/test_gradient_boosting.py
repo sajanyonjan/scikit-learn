@@ -1,6 +1,4 @@
-"""
-Testing for the gradient boosting module (sklearn.ensemble.gradient_boosting).
-"""
+# --
 import warnings
 import numpy as np
 
@@ -850,7 +848,7 @@ def test_warm_start_oob():
 
 
 def early_stopping_monitor(i, est, locals):
-    """Returns True on the 10th iteration. """
+    # --
     if i == 9:
         return True
     else:

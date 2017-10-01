@@ -1,9 +1,4 @@
-"""Test  kddcup99 loader. Only 'percent10' mode is tested, as the full data
-is too big to use in unit-testing.
-
-The test is skipped if the data wasn't previously fetched and saved to
-scikit-learn data folder.
-"""
+# --
 
 from sklearn.datasets import fetch_kddcup99
 from sklearn.utils.testing import assert_equal, SkipTest

@@ -14,9 +14,7 @@ from sklearn.utils.testing import assert_warns
 from sklearn.utils.testing import assert_greater
 
 from sklearn import datasets
-from sklearn.covariance import empirical_covariance, EmpiricalCovariance, \
-    ShrunkCovariance, shrunk_covariance, \
-    LedoitWolf, ledoit_wolf, ledoit_wolf_shrinkage, OAS, oas
+from sklearn.covariance import empirical_covariance, EmpiricalCovariance,    ShrunkCovariance, shrunk_covariance,    LedoitWolf, ledoit_wolf, ledoit_wolf_shrinkage, OAS, oas
 
 X = datasets.load_diabetes().data
 X_1d = X[:, 0]
@@ -201,8 +199,7 @@ def _naive_ledoit_wolf_shrinkage(X):
     delta_.flat[::n_features + 1] -= mu
     delta = (delta_ ** 2).sum() / n_features
     X2 = X ** 2
-    beta_ = 1. / (n_features * n_samples) \
-        * np.sum(np.dot(X2.T, X2) / n_samples - emp_cov ** 2)
+    beta_ = 1. / (n_features * n_samples)        * np.sum(np.dot(X2.T, X2) / n_samples - emp_cov ** 2)
 
     beta = min(beta_, delta)
     shrinkage = beta / delta

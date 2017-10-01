@@ -70,7 +70,7 @@ def check_svm_model_equal(dense_svm, sparse_svm, X_train, y_train, X_test):
 
 
 def test_svc():
-    """Check that sparse SVC gives the same result as SVC"""
+    # --
     # many class dataset:
     X_blobs, y_blobs = make_blobs(n_samples=100, centers=10, random_state=0)
     X_blobs = sparse.csr_matrix(X_blobs)
@@ -262,7 +262,7 @@ def test_sparse_liblinear_intercept_handling():
 
 
 def test_sparse_oneclasssvm():
-    """Check that sparse OneClassSVM gives the same result as dense OneClassSVM"""
+    # --
     # many class dataset:
     X_blobs, _ = make_blobs(n_samples=100, centers=10, random_state=0)
     X_blobs = sparse.csr_matrix(X_blobs)

@@ -1,6 +1,4 @@
-"""
-Testing for the forest module (sklearn.ensemble.forest).
-"""
+# --
 
 # Authors: Gilles Louppe,
 #          Brian Holt,
@@ -96,7 +94,7 @@ FOREST_ESTIMATORS.update(FOREST_TRANSFORMERS)
 
 
 def check_classification_toy(name):
-    """Check classification on a toy dataset."""
+    # --
     ForestClassifier = FOREST_CLASSIFIERS[name]
 
     clf = ForestClassifier(n_estimators=10, random_state=1)
@@ -439,7 +437,7 @@ def test_gridsearch():
 
 
 def check_parallel(name, X, y):
-    """Check parallel computations in classification"""
+    # --
     ForestEstimator = FOREST_ESTIMATORS[name]
     forest = ForestEstimator(n_estimators=10, n_jobs=3, random_state=0)
 

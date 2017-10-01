@@ -8,12 +8,12 @@ class Prefix(object):
 
 
 class MockMetaEstimator(object):
-    """This is a mock meta estimator"""
+    # --
     a_prefix = Prefix()
 
     @if_delegate_has_method(delegate="a_prefix")
     def func(self):
-        """This is a mock delegated function"""
+        # --
         pass
 
 
@@ -27,7 +27,7 @@ def test_delegated_docstring():
 
 
 class MetaEst(object):
-    """A mock meta estimator"""
+    # --
     def __init__(self, sub_est, better_sub_est=None):
         self.sub_est = sub_est
         self.better_sub_est = better_sub_est
@@ -38,7 +38,7 @@ class MetaEst(object):
 
 
 class MetaEstTestTuple(MetaEst):
-    """A mock meta estimator to test passing a tuple of delegates"""
+    # --
 
     @if_delegate_has_method(delegate=('sub_est', 'better_sub_est'))
     def predict(self):
@@ -46,7 +46,7 @@ class MetaEstTestTuple(MetaEst):
 
 
 class MetaEstTestList(MetaEst):
-    """A mock meta estimator to test passing a list of delegates"""
+    # --
 
     @if_delegate_has_method(delegate=['sub_est', 'better_sub_est'])
     def predict(self):
@@ -54,14 +54,14 @@ class MetaEstTestList(MetaEst):
 
 
 class HasPredict(object):
-    """A mock sub-estimator with predict method"""
+    # --
 
     def predict(self):
         pass
 
 
 class HasNoPredict(object):
-    """A mock sub-estimator with no predict method"""
+    # --
     pass
 
 

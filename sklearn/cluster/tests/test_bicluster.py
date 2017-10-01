@@ -1,4 +1,4 @@
-"""Testing for Spectral Biclustering methods"""
+# --
 
 import numpy as np
 from scipy.sparse import csr_matrix, issparse
@@ -134,7 +134,7 @@ def test_spectral_biclustering():
 
 
 def _do_scale_test(scaled):
-    """Check that rows sum to one constant, and columns to another."""
+    # --
     row_sum = scaled.sum(axis=1)
     col_sum = scaled.sum(axis=0)
     if issparse(scaled):
@@ -147,7 +147,7 @@ def _do_scale_test(scaled):
 
 
 def _do_bistochastic_test(scaled):
-    """Check that rows and columns sum to the same constant."""
+    # --
     _do_scale_test(scaled)
     assert_almost_equal(scaled.sum(axis=0).mean(),
                         scaled.sum(axis=1).mean(),

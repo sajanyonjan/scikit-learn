@@ -24,7 +24,7 @@ from sklearn.linear_model import PassiveAggressiveClassifier
 
 
 class MockImprovingEstimator(BaseEstimator):
-    """Dummy classifier to test the learning curve"""
+    # --
     def __init__(self, n_max_train_sizes):
         self.n_max_train_sizes = n_max_train_sizes
         self.train_sizes = 0
@@ -50,7 +50,7 @@ class MockImprovingEstimator(BaseEstimator):
 
 
 class MockIncrementalImprovingEstimator(MockImprovingEstimator):
-    """Dummy classifier that provides partial_fit"""
+    # --
     def __init__(self, n_max_train_sizes):
         super(MockIncrementalImprovingEstimator,
               self).__init__(n_max_train_sizes)
@@ -65,7 +65,7 @@ class MockIncrementalImprovingEstimator(MockImprovingEstimator):
 
 
 class MockEstimatorWithParameter(BaseEstimator):
-    """Dummy classifier to test the validation curve"""
+    # --
     def __init__(self, param=0.5):
         self.X_subset = None
         self.param = param
@@ -86,7 +86,7 @@ class MockEstimatorWithParameter(BaseEstimator):
 
 
 class MockEstimatorFailing(BaseEstimator):
-    """Dummy classifier to test error_score in learning curve"""
+    # --
     def fit(self, X_subset, y_subset):
         raise ValueError()
 
@@ -95,7 +95,7 @@ class MockEstimatorFailing(BaseEstimator):
 
 
 class MockEstimatorWithSingleFitCallAllowed(MockEstimatorWithParameter):
-    """Dummy classifier that disallows repeated calls of fit method"""
+    # --
 
     def fit(self, X_subset, y_subset):
         assert_false(
@@ -148,8 +148,7 @@ def test_learning_curve_verbose():
     old_stdout = sys.stdout
     sys.stdout = StringIO()
     try:
-        train_sizes, train_scores, test_scores = \
-            learning_curve(estimator, X, y, cv=3, verbose=1)
+        train_sizes, train_scores, test_scores =            learning_curve(estimator, X, y, cv=3, verbose=1)
     finally:
         out = sys.stdout.getvalue()
         sys.stdout.close()
@@ -224,12 +223,10 @@ def test_learning_curve_batch_and_incremental_learning_are_equal():
     estimator = PassiveAggressiveClassifier(max_iter=1, tol=None,
                                             shuffle=False)
 
-    train_sizes_inc, train_scores_inc, test_scores_inc = \
-        learning_curve(
+    train_sizes_inc, train_scores_inc, test_scores_inc =        learning_curve(
             estimator, X, y, train_sizes=train_sizes,
             cv=3, exploit_incremental_learning=True)
-    train_sizes_batch, train_scores_batch, test_scores_batch = \
-        learning_curve(
+    train_sizes_batch, train_scores_batch, test_scores_batch =        learning_curve(
             estimator, X, y, cv=3, train_sizes=train_sizes,
             exploit_incremental_learning=False)
 

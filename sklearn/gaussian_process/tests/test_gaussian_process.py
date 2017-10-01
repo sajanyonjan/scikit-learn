@@ -1,6 +1,4 @@
-"""
-Testing for Gaussian Process module (sklearn.gaussian_process)
-"""
+# --
 
 # Author: Vincent Dubourg <vincent.dubourg@gmail.com>
 # License: BSD 3 clause

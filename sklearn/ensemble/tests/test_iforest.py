@@ -1,6 +1,4 @@
-"""
-Testing for Isolation Forest algorithm (sklearn.ensemble.iforest).
-"""
+# --
 
 # Authors: Nicolas Goix <nicolas.goix@telecom-paristech.fr>
 #          Alexandre Gramfort <alexandre.gramfort@telecom-paristech.fr>
@@ -47,7 +45,7 @@ boston.target = boston.target[perm]
 
 
 def test_iforest():
-    """Check Isolation Forest for various parameter settings."""
+    # --
     X_train = np.array([[0, 1], [1, 2]])
     X_test = np.array([[2, 1], [1, 1]])
 
@@ -62,7 +60,7 @@ def test_iforest():
 
 
 def test_iforest_sparse():
-    """Check IForest for various parameter settings on sparse input."""
+    # --
     rng = check_random_state(0)
     X_train, X_test, y_train, y_test = train_test_split(boston.data[:50],
                                                         boston.target[:50],
@@ -89,7 +87,7 @@ def test_iforest_sparse():
 
 
 def test_iforest_error():
-    """Test that it gives proper exception on deficient input."""
+    # --
     X = iris.data
 
     # Test max_samples
@@ -112,7 +110,7 @@ def test_iforest_error():
 
 
 def test_recalculate_max_depth():
-    """Check max_depth recalculation when max_samples is reset to n_samples"""
+    # --
     X = iris.data
     clf = IsolationForest().fit(X)
     for est in clf.estimators_:
@@ -135,7 +133,7 @@ def test_max_samples_attribute():
 
 
 def test_iforest_parallel_regression():
-    """Check parallel regression."""
+    # --
     rng = check_random_state(0)
 
     X_train, X_test, y_train, y_test = train_test_split(boston.data,
@@ -159,7 +157,7 @@ def test_iforest_parallel_regression():
 
 
 def test_iforest_performance():
-    """Test Isolation Forest performs well"""
+    # --
 
     # Generate train/test data
     rng = check_random_state(2)

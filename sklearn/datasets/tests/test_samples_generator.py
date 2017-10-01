@@ -66,11 +66,7 @@ def test_make_classification():
 
 
 def test_make_classification_informative_features():
-    """Test the construction of informative features in make_classification
-
-    Also tests `n_clusters_per_class`, `n_classes`, `hypercube` and
-    fully-specified `weights`.
-    """
+    # --
     # Create very separate clusters; check that vertices are unique and
     # correspond to classes
     class_sep = 1e6

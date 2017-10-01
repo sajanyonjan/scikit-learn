@@ -1,7 +1,4 @@
-"""
-Testing for Clustering methods
-
-"""
+# --
 
 import numpy as np
 

@@ -1031,8 +1031,7 @@ def test_sample_weight_invariance(n_samples=50):
         if name in METRICS_WITHOUT_SAMPLE_WEIGHT:
             continue
         metric = ALL_METRICS[name]
-        yield _named_check(check_sample_weight_invariance, name), name,\
-            metric, y_true, y_pred
+        yield _named_check(check_sample_weight_invariance, name), name,            metric, y_true, y_pred
 
     # binary
     random_state = check_random_state(0)
@@ -1047,11 +1046,9 @@ def test_sample_weight_invariance(n_samples=50):
             continue
         metric = ALL_METRICS[name]
         if name in THRESHOLDED_METRICS:
-            yield _named_check(check_sample_weight_invariance, name), name,\
-                  metric, y_true, y_score
+            yield _named_check(check_sample_weight_invariance, name), name,                  metric, y_true, y_score
         else:
-            yield _named_check(check_sample_weight_invariance, name), name,\
-                  metric, y_true, y_pred
+            yield _named_check(check_sample_weight_invariance, name), name,                  metric, y_true, y_pred
 
     # multiclass
     random_state = check_random_state(0)
@@ -1066,11 +1063,9 @@ def test_sample_weight_invariance(n_samples=50):
             continue
         metric = ALL_METRICS[name]
         if name in THRESHOLDED_METRICS:
-            yield _named_check(check_sample_weight_invariance, name), name,\
-                  metric, y_true, y_score
+            yield _named_check(check_sample_weight_invariance, name), name,                  metric, y_true, y_score
         else:
-            yield _named_check(check_sample_weight_invariance, name), name,\
-                  metric, y_true, y_pred
+            yield _named_check(check_sample_weight_invariance, name), name,                  metric, y_true, y_pred
 
     # multilabel indicator
     _, ya = make_multilabel_classification(n_features=1, n_classes=20,

@@ -53,16 +53,13 @@ class T(BaseEstimator):
 
 
 class ModifyInitParams(BaseEstimator):
-    """Deprecated behavior.
-    Equal parameters but with a type cast.
-    Doesn't fulfill a is a
-    """
+    # --
     def __init__(self, a=np.array([0])):
         self.a = a.copy()
 
 
 class Buggy(BaseEstimator):
-    " A buggy estimator that does not set its parameters right. "
+    # --
 
     def __init__(self, a=None):
         self.a = 1
@@ -80,7 +77,7 @@ class NoEstimator(object):
 
 
 class VargEstimator(BaseEstimator):
-    """scikit-learn estimators shouldn't have vargs."""
+    # --
     def __init__(self, *vargs):
         pass
 
@@ -279,20 +276,7 @@ def test_score_sample_weight():
 def test_clone_pandas_dataframe():
 
     class DummyEstimator(BaseEstimator, TransformerMixin):
-        """This is a dummy class for generating numerical features
-
-        This feature extractor extracts numerical features from pandas data
-        frame.
-
-        Parameters
-        ----------
-
-        df: pandas data frame
-            The pandas data frame parameter.
-
-        Notes
-        -----
-        """
+        # --
         def __init__(self, df=None, scalar_param=1):
             self.df = df
             self.scalar_param = scalar_param

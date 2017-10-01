@@ -232,10 +232,7 @@ def test_non_negative_factorization_checking():
 
 
 def _beta_divergence_dense(X, W, H, beta):
-    """Compute the beta-divergence of X and W.H for dense array only.
-
-    Used as a reference for testing nmf._beta_divergence.
-    """
+    # --
     if isinstance(X, numbers.Number):
         W = np.array([[W]])
         H = np.array([[H]])

@@ -1,6 +1,4 @@
-"""
-Testing for the bagging ensemble module (sklearn.ensemble.bagging).
-"""
+# --
 
 # Author: Gilles Louppe
 # License: BSD 3 clause
@@ -80,7 +78,7 @@ def test_sparse_classification():
     # Check classification for various parameter settings on sparse input.
 
     class CustomSVC(SVC):
-        """SVC variant that records the nature of the training set"""
+        # --
 
         def fit(self, X, y):
             super(CustomSVC, self).fit(X, y)
@@ -166,7 +164,7 @@ def test_sparse_regression():
                                                         random_state=rng)
 
     class CustomSVR(SVR):
-        """SVC variant that records the nature of the training set"""
+        # --
 
         def fit(self, X, y):
             super(CustomSVR, self).fit(X, y)

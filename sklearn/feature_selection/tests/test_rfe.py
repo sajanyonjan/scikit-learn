@@ -1,6 +1,4 @@
-"""
-Testing Recursive feature elimination
-"""
+# --
 import numpy as np
 from numpy.testing import assert_array_almost_equal, assert_array_equal
 from scipy import sparse
@@ -21,9 +19,7 @@ from sklearn.metrics import get_scorer
 
 
 class MockClassifier(object):
-    """
-    Dummy classifier to test recursive feature elimination
-    """
+    # --
 
     def __init__(self, foo_param=0):
         self.foo_param = foo_param

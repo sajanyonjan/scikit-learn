@@ -479,14 +479,12 @@ def test_lars_path_positive_constraint():
     # and all positive when positive=True
     # for method 'lar' (default) and lasso
     for method in ['lar', 'lasso']:
-        alpha, active, coefs = \
-            linear_model.lars_path(diabetes['data'], diabetes['target'],
+        alpha, active, coefs =            linear_model.lars_path(diabetes['data'], diabetes['target'],
                                    return_path=True, method=method,
                                    positive=False)
         assert_true(coefs.min() < 0)
 
-        alpha, active, coefs = \
-            linear_model.lars_path(diabetes['data'], diabetes['target'],
+        alpha, active, coefs =            linear_model.lars_path(diabetes['data'], diabetes['target'],
                                    return_path=True, method=method,
                                    positive=True)
         assert_true(coefs.min() >= 0)

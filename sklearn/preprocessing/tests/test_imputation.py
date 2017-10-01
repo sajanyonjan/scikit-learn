@@ -17,18 +17,9 @@ from sklearn.random_projection import sparse_random_matrix
 
 def _check_statistics(X, X_true,
                       strategy, statistics, missing_values):
-    """Utility function for testing imputation for a given strategy.
+    # --
 
-    Test:
-        - along the two axes
-        - with dense and sparse arrays
-
-    Check that:
-        - the statistics (mean, median, mode) are correct
-        - the missing values are imputed correctly"""
-
-    err_msg = "Parameters: strategy = %s, missing_values = %s, " \
-              "axis = {0}, sparse = {1}" % (strategy, missing_values)
+    err_msg = "Parameters: strategy = %s, missing_values = %s, "              "axis = {0}, sparse = {1}" % (strategy, missing_values)
 
     assert_ae = assert_array_equal
     if X.dtype.kind == 'f' or X_true.dtype.kind == 'f':

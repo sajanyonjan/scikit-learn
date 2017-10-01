@@ -36,8 +36,7 @@ from sklearn import datasets
 
 
 class NotAnArray(object):
-    """An object that is convertable to an array. This is useful to
-    simulate a Pandas timeseries."""
+    # --
 
     def __init__(self, data):
         self.data = data

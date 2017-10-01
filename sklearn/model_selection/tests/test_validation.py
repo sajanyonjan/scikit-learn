@@ -1,4 +1,4 @@
-"""Test the validation module"""
+# --
 from __future__ import division
 
 import sys
@@ -83,7 +83,7 @@ except NameError:
 
 
 class MockImprovingEstimator(BaseEstimator):
-    """Dummy classifier to test the learning curve"""
+    # --
     def __init__(self, n_max_train_sizes):
         self.n_max_train_sizes = n_max_train_sizes
         self.train_sizes = 0
@@ -109,7 +109,7 @@ class MockImprovingEstimator(BaseEstimator):
 
 
 class MockIncrementalImprovingEstimator(MockImprovingEstimator):
-    """Dummy classifier that provides partial_fit"""
+    # --
     def __init__(self, n_max_train_sizes):
         super(MockIncrementalImprovingEstimator,
               self).__init__(n_max_train_sizes)
@@ -124,7 +124,7 @@ class MockIncrementalImprovingEstimator(MockImprovingEstimator):
 
 
 class MockEstimatorWithParameter(BaseEstimator):
-    """Dummy classifier to test the validation curve"""
+    # --
     def __init__(self, param=0.5):
         self.X_subset = None
         self.param = param
@@ -145,7 +145,7 @@ class MockEstimatorWithParameter(BaseEstimator):
 
 
 class MockEstimatorWithSingleFitCallAllowed(MockEstimatorWithParameter):
-    """Dummy classifier that disallows repeated calls of fit method"""
+    # --
 
     def fit(self, X_subset, y_subset):
         assert_false(
@@ -160,7 +160,7 @@ class MockEstimatorWithSingleFitCallAllowed(MockEstimatorWithParameter):
 
 
 class MockClassifier(object):
-    """Dummy classifier to test the cross-validation"""
+    # --
 
     def __init__(self, a=0, allow_nd=False):
         self.a = a
@@ -169,13 +169,7 @@ class MockClassifier(object):
     def fit(self, X, Y=None, sample_weight=None, class_prior=None,
             sparse_sample_weight=None, sparse_param=None, dummy_int=None,
             dummy_str=None, dummy_obj=None, callback=None):
-        """The dummy arguments are to test that this fit function can
-        accept non-array arguments through cross-validation, such as:
-            - int
-            - str (this is actually array-like)
-            - object
-            - function
-        """
+        # --
         self.dummy_int = dummy_int
         self.dummy_str = dummy_str
         self.dummy_obj = dummy_obj
@@ -1015,8 +1009,7 @@ def test_learning_curve_verbose():
     old_stdout = sys.stdout
     sys.stdout = StringIO()
     try:
-        train_sizes, train_scores, test_scores = \
-            learning_curve(estimator, X, y, cv=3, verbose=1)
+        train_sizes, train_scores, test_scores =            learning_curve(estimator, X, y, cv=3, verbose=1)
     finally:
         out = sys.stdout.getvalue()
         sys.stdout.close()
@@ -1074,12 +1067,10 @@ def test_learning_curve_batch_and_incremental_learning_are_equal():
     estimator = PassiveAggressiveClassifier(max_iter=1, tol=None,
                                             shuffle=False)
 
-    train_sizes_inc, train_scores_inc, test_scores_inc = \
-        learning_curve(
+    train_sizes_inc, train_scores_inc, test_scores_inc =        learning_curve(
             estimator, X, y, train_sizes=train_sizes,
             cv=3, exploit_incremental_learning=True)
-    train_sizes_batch, train_scores_batch, test_scores_batch = \
-        learning_curve(
+    train_sizes_batch, train_scores_batch, test_scores_batch =        learning_curve(
             estimator, X, y, cv=3, train_sizes=train_sizes,
             exploit_incremental_learning=False)
 

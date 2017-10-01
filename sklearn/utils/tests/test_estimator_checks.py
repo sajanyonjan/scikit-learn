@@ -24,11 +24,7 @@ from sklearn.utils.validation import check_X_y, check_array
 
 
 class CorrectNotFittedError(ValueError):
-    """Exception class to raise if estimator is used before fitting.
-
-    Like NotFittedError, it inherits from ValueError, but not from
-    AttributeError. Used for testing only.
-    """
+    # --
 
 
 class BaseBadClassifier(BaseEstimator, ClassifierMixin):

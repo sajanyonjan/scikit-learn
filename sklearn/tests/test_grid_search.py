@@ -1,7 +1,4 @@
-"""
-Testing for grid search module (sklearn.grid_search)
-
-"""
+# --
 
 from collections import Iterable, Sized
 from sklearn.externals.six.moves import cStringIO as StringIO
@@ -59,7 +56,7 @@ from sklearn.pipeline import Pipeline
 # Neither of the following two estimators inherit from BaseEstimator,
 # to test hyperparameter search on user-defined classifiers.
 class MockClassifier(object):
-    """Dummy classifier to test the cross-validation"""
+    # --
     def __init__(self, foo_param=0):
         self.foo_param = foo_param
 
@@ -95,7 +92,7 @@ class MockClassifier(object):
 
 
 class LinearSVCNoScore(LinearSVC):
-    """An LinearSVC classifier that has no score method."""
+    # --
     @property
     def score(self):
         raise AttributeError
@@ -434,7 +431,7 @@ def test_grid_search_precomputed_kernel_error_kernel_function():
 
 
 class BrokenClassifier(BaseEstimator):
-    """Broken classifier that cannot be fit twice"""
+    # --
 
     def __init__(self, parameter=None):
         self.parameter = parameter
@@ -706,7 +703,7 @@ def test_grid_search_allows_nans():
 
 
 class FailingClassifier(BaseEstimator):
-    """Classifier that raises a ValueError on fit()"""
+    # --
 
     FAILING_PARAMETER = 2
 

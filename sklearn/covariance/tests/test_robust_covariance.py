@@ -15,8 +15,7 @@ from sklearn.utils.testing import assert_raise_message
 from sklearn.exceptions import NotFittedError
 
 from sklearn import datasets
-from sklearn.covariance import empirical_covariance, MinCovDet, \
-    EllipticEnvelope
+from sklearn.covariance import empirical_covariance, MinCovDet,    EllipticEnvelope
 from sklearn.covariance import fast_mcd
 
 X = datasets.load_iris().data
@@ -64,8 +63,7 @@ def launch_mcd_on_dataset(n_samples, n_features, n_outliers, tol_loc, tol_cov,
     data = rand_gen.randn(n_samples, n_features)
     # add some outliers
     outliers_index = rand_gen.permutation(n_samples)[:n_outliers]
-    outliers_offset = 10. * \
-        (rand_gen.randint(2, size=(n_outliers, n_features)) - 0.5)
+    outliers_offset = 10. *        (rand_gen.randint(2, size=(n_outliers, n_features)) - 0.5)
     data[outliers_index] += outliers_offset
     inliers_mask = np.ones(n_samples).astype(bool)
     inliers_mask[outliers_index] = False

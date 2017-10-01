@@ -1,6 +1,4 @@
-"""
-Smoke Test the check_build module
-"""
+# --
 
 # Author: G Varoquaux
 # License: BSD 3 clause

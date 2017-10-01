@@ -38,11 +38,7 @@ from sklearn.exceptions import UndefinedMetricWarning
 # Utilities for testing
 
 def make_prediction(dataset=None, binary=False):
-    """Make some classification predictions on a toy dataset using a SVC
-
-    If binary is True restrict to a binary classification problem instead of a
-    multiclass classification problem
-    """
+    # --
 
     if dataset is None:
         # import some data to play with
@@ -85,8 +81,7 @@ def make_prediction(dataset=None, binary=False):
 # Tests
 
 def _auc(y_true, y_score):
-    """Alternative implementation to check for correctness of
-    `roc_auc_score`."""
+    # --
     pos_label = np.unique(y_true)[1]
 
     # Count the number of times positive samples are correctly ranked above
@@ -100,14 +95,7 @@ def _auc(y_true, y_score):
 
 
 def _average_precision(y_true, y_score):
-    """Alternative implementation to check for correctness of
-    `average_precision_score`.
-
-    Note that this implementation fails on some edge cases.
-    For example, for constant predictions e.g. [0.5, 0.5, 0.5],
-    y_true = [1, 0, 0] returns an average precision of 0.33...
-    but y_true = [0, 0, 1] returns 1.0.
-    """
+    # --
     pos_label = np.unique(y_true)[1]
     n_pos = np.sum(y_true == pos_label)
     order = np.argsort(y_score)[::-1]
@@ -130,15 +118,7 @@ def _average_precision(y_true, y_score):
 
 
 def _average_precision_slow(y_true, y_score):
-    """A second alternative implementation of average precision that closely
-    follows the Wikipedia article's definition (see References). This should
-    give identical results as `average_precision_score` for all inputs.
-
-    References
-    ----------
-    .. [1] `Wikipedia entry for the Average precision
-       <http://en.wikipedia.org/wiki/Average_precision>`_
-    """
+    # --
     precision, recall, threshold = precision_recall_curve(y_true, y_score)
     precision = list(reversed(precision))
     recall = list(reversed(recall))
@@ -830,7 +810,7 @@ def check_lrap_without_tie_and_increasing_score(lrap_score):
 
 
 def _my_lrap(y_true, y_score):
-    """Simple implementation of label ranking average precision"""
+    # --
     check_consistent_length(y_true, y_score)
     y_true = check_array(y_true)
     y_score = check_array(y_score)

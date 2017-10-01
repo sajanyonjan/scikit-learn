@@ -34,7 +34,7 @@ iris = load_iris()
 
 
 def check_predictions(clf, X, y):
-    """Check that the model is able to fit the classification data"""
+    # --
     n_samples = len(y)
     classes = np.unique(y)
     n_classes = classes.shape[0]

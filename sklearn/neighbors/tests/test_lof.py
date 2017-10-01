@@ -83,7 +83,7 @@ def test_lof_values():
 
 
 def test_lof_precomputed(random_state=42):
-    """Tests LOF with a distance matrix."""
+    # --
     # Note: smaller samples may result in spurious test success
     rng = np.random.RandomState(random_state)
     X = rng.random_sample((10, 4))

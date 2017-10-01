@@ -252,93 +252,31 @@ class TestWarns(unittest.TestCase):
 # Tests for docstrings:
 
 def f_ok(a, b):
-    """Function f
-
-    Parameters
-    ----------
-    a : int
-        Parameter a
-    b : float
-        Parameter b
-
-    Returns
-    -------
-    c : list
-        Parameter c
-    """
+    # --
     c = a + b
     return c
 
 
 def f_bad_sections(a, b):
-    """Function f
-
-    Parameters
-    ----------
-    a : int
-        Parameter a
-    b : float
-        Parameter b
-
-    Results
-    -------
-    c : list
-        Parameter c
-    """
+    # --
     c = a + b
     return c
 
 
 def f_bad_order(b, a):
-    """Function f
-
-    Parameters
-    ----------
-    a : int
-        Parameter a
-    b : float
-        Parameter b
-
-    Returns
-    -------
-    c : list
-        Parameter c
-    """
+    # --
     c = a + b
     return c
 
 
 def f_missing(a, b):
-    """Function f
-
-    Parameters
-    ----------
-    a : int
-        Parameter a
-
-    Returns
-    -------
-    c : list
-        Parameter c
-    """
+    # --
     c = a + b
     return c
 
 
 def f_check_param_definition(a, b, c, d):
-    """Function f
-
-    Parameters
-    ----------
-    a: int
-        Parameter a
-    b:
-        Parameter b
-    c :
-        Parameter c
-    d:int
-        Parameter d
-    """
+    # --
     return a + b + c + d
 
 
@@ -347,26 +285,13 @@ class Klass(object):
         pass
 
     def f_bad_sections(self, X, y):
-        """Function f
-
-        Parameter
-        ----------
-        a : int
-            Parameter a
-        b : float
-            Parameter b
-
-        Results
-        -------
-        c : list
-            Parameter c
-        """
+        # --
         pass
 
 
 class MockEst(object):
     def __init__(self):
-        """MockEstimator"""
+        # --
     def fit(self, X, y):
         return X
 
@@ -382,64 +307,34 @@ class MockEst(object):
 
 class MockMetaEstimator(object):
     def __init__(self, delegate):
-        """MetaEstimator to check if doctest on delegated methods work.
-
-        Parameters
-        ---------
-        delegate : estimator
-            Delegated estimator.
-        """
+        # --
         self.delegate = delegate
 
     @if_delegate_has_method(delegate=('delegate'))
     def predict(self, X):
-        """This is available only if delegate has predict.
-
-        Parameters
-        ----------
-        y : ndarray
-            Parameter y
-        """
+        # --
         return self.delegate.predict(X)
 
     @deprecated("Testing a deprecated delegated method")
     @if_delegate_has_method(delegate=('delegate'))
     def score(self, X):
-        """This is available only if delegate has score.
-
-        Parameters
-        ---------
-        y : ndarray
-            Parameter y
-        """
+        # --
 
     @if_delegate_has_method(delegate=('delegate'))
     def predict_proba(self, X):
-        """This is available only if delegate has predict_proba.
-
-        Parameters
-        ---------
-        X : ndarray
-            Parameter X
-        """
+        # --
         return X
 
     @deprecated('Testing deprecated function with incorrect params')
     @if_delegate_has_method(delegate=('delegate'))
     def predict_log_proba(self, X):
-        """This is available only if delegate has predict_proba.
-
-        Parameters
-        ---------
-        y : ndarray
-            Parameter X
-        """
+        # --
         return X
 
     @deprecated('Testing deprecated function with wrong params')
     @if_delegate_has_method(delegate=('delegate'))
     def fit(self, X, y):
-        """Incorrect docstring but should not be tested"""
+        # --
 
 
 def test_check_docstring_parameters():

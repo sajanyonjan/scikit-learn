@@ -61,8 +61,7 @@ def test_pls():
     # Check X = TP' and Y = UQ' (with (p == q) components)
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # center scale X, Y
-    Xc, Yc, x_mean, y_mean, x_std, y_std =\
-        pls_._center_scale_xy(X.copy(), Y.copy(), scale=True)
+    Xc, Yc, x_mean, y_mean, x_std, y_std =        pls_._center_scale_xy(X.copy(), Y.copy(), scale=True)
     assert_array_almost_equal(Xc, np.dot(T, P.T), err_msg="X != TP'")
     assert_array_almost_equal(Yc, np.dot(U, Q.T), err_msg="Y != UQ'")
 

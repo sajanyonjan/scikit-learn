@@ -530,7 +530,7 @@ def test_class_weights():
 
 
 def test_class_weight_vs_sample_weight():
-    """Check class_weights resemble sample_weights behavior."""
+    # --
     for reg in (RidgeClassifier, RidgeClassifierCV):
 
         # Iris is balanced, so no effect expected for using 'balanced' weights

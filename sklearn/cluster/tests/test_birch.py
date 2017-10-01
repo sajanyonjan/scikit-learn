@@ -1,6 +1,4 @@
-"""
-Tests for the birch clustering algorithm.
-"""
+# --
 
 from scipy import sparse
 import numpy as np
@@ -140,7 +138,7 @@ def test_branching_factor():
 
 
 def check_threshold(birch_instance, threshold):
-    """Use the leaf linked list for traversal"""
+    # --
     current_leaf = birch_instance.dummy_leaf_.next_leaf_
     while current_leaf:
         subclusters = current_leaf.subclusters_

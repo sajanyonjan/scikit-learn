@@ -193,24 +193,21 @@ def test_preprocess_data():
     expected_X_norm = np.std(X, axis=0) * np.sqrt(X.shape[0])
     expected_y_mean = np.mean(y, axis=0)
 
-    Xt, yt, X_mean, y_mean, X_norm = \
-        _preprocess_data(X, y, fit_intercept=False, normalize=False)
+    Xt, yt, X_mean, y_mean, X_norm =        _preprocess_data(X, y, fit_intercept=False, normalize=False)
     assert_array_almost_equal(X_mean, np.zeros(n_features))
     assert_array_almost_equal(y_mean, 0)
     assert_array_almost_equal(X_norm, np.ones(n_features))
     assert_array_almost_equal(Xt, X)
     assert_array_almost_equal(yt, y)
 
-    Xt, yt, X_mean, y_mean, X_norm = \
-        _preprocess_data(X, y, fit_intercept=True, normalize=False)
+    Xt, yt, X_mean, y_mean, X_norm =        _preprocess_data(X, y, fit_intercept=True, normalize=False)
     assert_array_almost_equal(X_mean, expected_X_mean)
     assert_array_almost_equal(y_mean, expected_y_mean)
     assert_array_almost_equal(X_norm, np.ones(n_features))
     assert_array_almost_equal(Xt, X - expected_X_mean)
     assert_array_almost_equal(yt, y - expected_y_mean)
 
-    Xt, yt, X_mean, y_mean, X_norm = \
-        _preprocess_data(X, y, fit_intercept=True, normalize=True)
+    Xt, yt, X_mean, y_mean, X_norm =        _preprocess_data(X, y, fit_intercept=True, normalize=True)
     assert_array_almost_equal(X_mean, expected_X_mean)
     assert_array_almost_equal(y_mean, expected_y_mean)
     assert_array_almost_equal(X_norm, expected_X_norm)
@@ -258,8 +255,7 @@ def test_preprocess_data_weighted():
     expected_X_norm = (np.sqrt(X.shape[0]) *
                        np.mean((X - expected_X_mean) ** 2, axis=0) ** .5)
 
-    Xt, yt, X_mean, y_mean, X_norm = \
-        _preprocess_data(X, y, fit_intercept=True, normalize=False,
+    Xt, yt, X_mean, y_mean, X_norm =        _preprocess_data(X, y, fit_intercept=True, normalize=False,
                          sample_weight=sample_weight)
     assert_array_almost_equal(X_mean, expected_X_mean)
     assert_array_almost_equal(y_mean, expected_y_mean)
@@ -267,8 +263,7 @@ def test_preprocess_data_weighted():
     assert_array_almost_equal(Xt, X - expected_X_mean)
     assert_array_almost_equal(yt, y - expected_y_mean)
 
-    Xt, yt, X_mean, y_mean, X_norm = \
-        _preprocess_data(X, y, fit_intercept=True, normalize=True,
+    Xt, yt, X_mean, y_mean, X_norm =        _preprocess_data(X, y, fit_intercept=True, normalize=True,
                          sample_weight=sample_weight)
     assert_array_almost_equal(X_mean, expected_X_mean)
     assert_array_almost_equal(y_mean, expected_y_mean)
@@ -287,8 +282,7 @@ def test_sparse_preprocess_data_with_return_mean():
     XA = X.toarray()
     expected_X_norm = np.std(XA, axis=0) * np.sqrt(X.shape[0])
 
-    Xt, yt, X_mean, y_mean, X_norm = \
-        _preprocess_data(X, y, fit_intercept=False, normalize=False,
+    Xt, yt, X_mean, y_mean, X_norm =        _preprocess_data(X, y, fit_intercept=False, normalize=False,
                          return_mean=True)
     assert_array_almost_equal(X_mean, np.zeros(n_features))
     assert_array_almost_equal(y_mean, 0)
@@ -296,8 +290,7 @@ def test_sparse_preprocess_data_with_return_mean():
     assert_array_almost_equal(Xt.A, XA)
     assert_array_almost_equal(yt, y)
 
-    Xt, yt, X_mean, y_mean, X_norm = \
-        _preprocess_data(X, y, fit_intercept=True, normalize=False,
+    Xt, yt, X_mean, y_mean, X_norm =        _preprocess_data(X, y, fit_intercept=True, normalize=False,
                          return_mean=True)
     assert_array_almost_equal(X_mean, np.mean(XA, axis=0))
     assert_array_almost_equal(y_mean, np.mean(y, axis=0))
@@ -305,8 +298,7 @@ def test_sparse_preprocess_data_with_return_mean():
     assert_array_almost_equal(Xt.A, XA)
     assert_array_almost_equal(yt, y - np.mean(y, axis=0))
 
-    Xt, yt, X_mean, y_mean, X_norm = \
-        _preprocess_data(X, y, fit_intercept=True, normalize=True,
+    Xt, yt, X_mean, y_mean, X_norm =        _preprocess_data(X, y, fit_intercept=True, normalize=True,
                          return_mean=True)
     assert_array_almost_equal(X_mean, np.mean(XA, axis=0))
     assert_array_almost_equal(y_mean, np.mean(y, axis=0))
@@ -420,15 +412,13 @@ def test_deprecation_center_data():
 
         XX = X.copy()  # such that we can try copy=False as well
 
-        X1, y1, X1_mean, X1_var, y1_mean = \
-            center_data(XX, y, fit_intercept=fit_intercept,
+        X1, y1, X1_mean, X1_var, y1_mean =            center_data(XX, y, fit_intercept=fit_intercept,
                         normalize=normalize, copy=copy,
                         sample_weight=sample_weight)
 
         XX = X.copy()
 
-        X2, y2, X2_mean, X2_var, y2_mean = \
-            _preprocess_data(XX, y, fit_intercept=fit_intercept,
+        X2, y2, X2_mean, X2_var, y2_mean =            _preprocess_data(XX, y, fit_intercept=fit_intercept,
                              normalize=normalize, copy=copy,
                              sample_weight=sample_weight)
 
@@ -443,12 +433,10 @@ def test_deprecation_center_data():
 
     for (fit_intercept, normalize, copy, sample_weight) in param_grid:
 
-        X1, y1, X1_mean, X1_var, y1_mean = \
-            center_data(X, y, fit_intercept=fit_intercept, normalize=normalize,
+        X1, y1, X1_mean, X1_var, y1_mean =            center_data(X, y, fit_intercept=fit_intercept, normalize=normalize,
                         copy=copy, sample_weight=sample_weight)
 
-        X2, y2, X2_mean, X2_var, y2_mean = \
-            _preprocess_data(X, y, fit_intercept=fit_intercept,
+        X2, y2, X2_mean, X2_var, y2_mean =            _preprocess_data(X, y, fit_intercept=fit_intercept,
                              normalize=normalize, copy=copy,
                              sample_weight=sample_weight, return_mean=False)
 
@@ -460,12 +448,10 @@ def test_deprecation_center_data():
 
     for (fit_intercept, normalize) in product([True, False], [True, False]):
 
-        X1, y1, X1_mean, X1_var, y1_mean = \
-            sparse_center_data(X, y, fit_intercept=fit_intercept,
+        X1, y1, X1_mean, X1_var, y1_mean =            sparse_center_data(X, y, fit_intercept=fit_intercept,
                                normalize=normalize)
 
-        X2, y2, X2_mean, X2_var, y2_mean = \
-            _preprocess_data(X, y, fit_intercept=fit_intercept,
+        X2, y2, X2_mean, X2_var, y2_mean =            _preprocess_data(X, y, fit_intercept=fit_intercept,
                              normalize=normalize, return_mean=True)
 
         assert_array_almost_equal(X1.toarray(), X2.toarray())

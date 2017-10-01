@@ -1,5 +1,4 @@
-""" Test fast_dict.
-"""
+# --
 import numpy as np
 
 from sklearn.utils.fast_dict import IntFloatDict, argmin

@@ -359,7 +359,7 @@ def test_doc_topic_distr_deprecation():
 
 
 def test_lda_empty_docs():
-    """Test LDA on empty document (all-zero rows)."""
+    # --
     Z = np.zeros((5, 4))
     for X in [Z, csr_matrix(Z)]:
         lda = LatentDirichletAllocation(max_iter=750).fit(X)
@@ -368,7 +368,7 @@ def test_lda_empty_docs():
 
 
 def test_dirichlet_expectation():
-    """Test Cython version of Dirichlet expectation calculation."""
+    # --
     x = np.logspace(-100, 10, 10000)
     expectation = np.empty_like(x)
     _dirichlet_expectation_1d(x, 0, expectation)

@@ -255,8 +255,7 @@ class CommonTest(object):
         clf1.fit(X, Y_encode)
         clf2.fit(X, Y_encode)
 
-        average_weights, average_intercept = \
-            self.asgd(X, Y_encode, eta0, alpha,
+        average_weights, average_intercept =            self.asgd(X, Y_encode, eta0, alpha,
                       weight_init=clf2.coef_.ravel(),
                       intercept_init=clf2.intercept_)
 
@@ -273,7 +272,7 @@ class CommonTest(object):
 
 
 class DenseSGDClassifierTestCase(unittest.TestCase, CommonTest):
-    """Test suite for the dense representation variant of SGD"""
+    # --
     factory_class = SGDClassifier
 
     def test_sgd(self):
@@ -819,7 +818,7 @@ class DenseSGDClassifierTestCase(unittest.TestCase, CommonTest):
 
 
 class SparseSGDClassifierTestCase(DenseSGDClassifierTestCase):
-    """Run exactly the same tests using the sparse representation variant"""
+    # --
 
     factory_class = SparseSGDClassifier
 
@@ -828,7 +827,7 @@ class SparseSGDClassifierTestCase(DenseSGDClassifierTestCase):
 # Regression Test Case
 
 class DenseSGDRegressorTestCase(unittest.TestCase, CommonTest):
-    """Test suite for the dense representation variant of SGD"""
+    # --
 
     factory_class = SGDRegressor
 

@@ -1,4 +1,4 @@
-"""Testing for the VotingClassifier"""
+# --
 
 import numpy as np
 from sklearn.utils.testing import assert_almost_equal, assert_array_equal
@@ -75,7 +75,7 @@ def test_notfitted():
 
 
 def test_majority_label_iris():
-    """Check classification by majority label on dataset iris."""
+    # --
     clf1 = LogisticRegression(random_state=123)
     clf2 = RandomForestClassifier(random_state=123)
     clf3 = GaussianNB()
@@ -87,7 +87,7 @@ def test_majority_label_iris():
 
 
 def test_tie_situation():
-    """Check voting classifier selects smaller class label in tie situation."""
+    # --
     clf1 = LogisticRegression(random_state=123)
     clf2 = RandomForestClassifier(random_state=123)
     eclf = VotingClassifier(estimators=[('lr', clf1), ('rf', clf2)],
@@ -98,7 +98,7 @@ def test_tie_situation():
 
 
 def test_weights_iris():
-    """Check classification by average probabilities on dataset iris."""
+    # --
     clf1 = LogisticRegression(random_state=123)
     clf2 = RandomForestClassifier(random_state=123)
     clf3 = GaussianNB()
@@ -111,7 +111,7 @@ def test_weights_iris():
 
 
 def test_predict_on_toy_problem():
-    """Manually check predicted class labels for toy dataset."""
+    # --
     clf1 = LogisticRegression(random_state=123)
     clf2 = RandomForestClassifier(random_state=123)
     clf3 = GaussianNB()
@@ -143,7 +143,7 @@ def test_predict_on_toy_problem():
 
 
 def test_predict_proba_on_toy_problem():
-    """Calculate predicted probabilities on toy dataset."""
+    # --
     clf1 = LogisticRegression(random_state=123)
     clf2 = RandomForestClassifier(random_state=123)
     clf3 = GaussianNB()
@@ -195,7 +195,7 @@ def test_predict_proba_on_toy_problem():
 
 
 def test_multilabel():
-    """Check if error is raised for multilabel classification."""
+    # --
     X, y = make_multilabel_classification(n_classes=2, n_labels=1,
                                           allow_unlabeled=False,
                                           random_state=123)
@@ -210,7 +210,7 @@ def test_multilabel():
 
 
 def test_gridsearch():
-    """Check GridSearch support."""
+    # --
     clf1 = LogisticRegression(random_state=1)
     clf2 = RandomForestClassifier(random_state=1)
     clf3 = GaussianNB()
@@ -227,7 +227,7 @@ def test_gridsearch():
 
 
 def test_parallel_fit():
-    """Check parallel backend of VotingClassifier on toy dataset."""
+    # --
     clf1 = LogisticRegression(random_state=123)
     clf2 = RandomForestClassifier(random_state=123)
     clf3 = GaussianNB()
@@ -248,7 +248,7 @@ def test_parallel_fit():
 
 
 def test_sample_weight():
-    """Tests sample_weight parameter of VotingClassifier"""
+    # --
     clf1 = LogisticRegression(random_state=123)
     clf2 = RandomForestClassifier(random_state=123)
     clf3 = SVC(probability=True, random_state=123)
@@ -277,9 +277,9 @@ def test_sample_weight():
 
 
 def test_sample_weight_kwargs():
-    """Check that VotingClassifier passes sample_weight as kwargs"""
+    # --
     class MockClassifier(BaseEstimator, ClassifierMixin):
-        """Mock Classifier to check that sample_weight is received as kwargs"""
+        # --
         def fit(self, X, y, *args, **sample_weight):
             assert_true('sample_weight' in sample_weight)
 
@@ -291,7 +291,7 @@ def test_sample_weight_kwargs():
 
 
 def test_set_params():
-    """set_params should be able to set estimators"""
+    # --
     clf1 = LogisticRegression(random_state=123, C=1.0)
     clf2 = RandomForestClassifier(random_state=123, max_depth=None)
     clf3 = GaussianNB()
@@ -325,7 +325,7 @@ def test_set_params():
 
 
 def test_set_estimator_none():
-    """VotingClassifier set_params should be able to set estimators as None"""
+    # --
     # Test predict
     clf1 = LogisticRegression(random_state=123)
     clf2 = RandomForestClassifier(random_state=123)
@@ -394,7 +394,7 @@ def test_estimator_weights_format():
 
 
 def test_transform():
-    """Check transform method of VotingClassifier on toy dataset."""
+    # --
     clf1 = LogisticRegression(random_state=123)
     clf2 = RandomForestClassifier(random_state=123)
     clf3 = GaussianNB()

@@ -68,7 +68,7 @@ def test_gnb_prior():
 
 
 def test_gnb_sample_weight():
-    """Test whether sample weights are properly used in GNB. """
+    # --
     # Sample weights all being 1 should not change results
     sw = np.ones(6)
     clf = GaussianNB().fit(X, y)
@@ -100,13 +100,13 @@ def test_gnb_sample_weight():
 
 
 def test_gnb_neg_priors():
-    """Test whether an error is raised in case of negative priors"""
+    # --
     clf = GaussianNB(priors=np.array([-1., 2.]))
     assert_raises(ValueError, clf.fit, X, y)
 
 
 def test_gnb_priors():
-    """Test whether the class prior override is properly used"""
+    # --
     clf = GaussianNB(priors=np.array([0.3, 0.7])).fit(X, y)
     assert_array_almost_equal(clf.predict_proba([[-0.1, -0.1]]),
                               np.array([[0.825303662161683,
@@ -127,27 +127,26 @@ def test_gnb_priors_sum_isclose():
 
 
 def test_gnb_wrong_nb_priors():
-    """ Test whether an error is raised if the number of prior is different
-    from the number of class"""
+    # --
     clf = GaussianNB(priors=np.array([.25, .25, .25, .25]))
     assert_raises(ValueError, clf.fit, X, y)
 
 
 def test_gnb_prior_greater_one():
-    """Test if an error is raised if the sum of prior greater than one"""
+    # --
     clf = GaussianNB(priors=np.array([2., 1.]))
     assert_raises(ValueError, clf.fit, X, y)
 
 
 def test_gnb_prior_large_bias():
-    """Test if good prediction when class prior favor largely one class"""
+    # --
     clf = GaussianNB(priors=np.array([0.01, 0.99]))
     clf.fit(X, y)
     assert_equal(clf.predict([[-0.1, -0.1]]), np.array([2]))
 
 
 def test_check_update_with_no_data():
-    """ Test when the partial fit is called without any data"""
+    # --
     # Create an empty array
     prev_points = 100
     mean = 0.
@@ -160,8 +159,7 @@ def test_check_update_with_no_data():
 
 
 def test_gnb_pfit_wrong_nb_features():
-    """Test whether an error is raised when the number of feature changes
-    between two partial fit"""
+    # --
     clf = GaussianNB()
     # Fit for the first time the GNB
     clf.fit(X, y)

@@ -1,7 +1,4 @@
-"""
-Tests for chi2, currently the only feature selection function designed
-specifically to work with sparse matrices.
-"""
+# --
 
 import warnings
 
@@ -27,7 +24,7 @@ y = [0, 1, 2, 2]
 
 
 def mkchi2(k):
-    """Make k-best chi2 selector"""
+    # --
     return SelectKBest(chi2, k=k)
 
 

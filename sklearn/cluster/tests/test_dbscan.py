@@ -1,6 +1,4 @@
-"""
-Tests for DBSCAN clustering algorithm
-"""
+# --
 
 import pickle
 

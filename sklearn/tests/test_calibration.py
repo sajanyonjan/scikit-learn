@@ -26,7 +26,7 @@ from sklearn.calibration import calibration_curve
 
 @ignore_warnings
 def test_calibration():
-    """Test calibration objects with isotonic and sigmoid"""
+    # --
     n_samples = 100
     X, y = make_classification(n_samples=2 * n_samples, n_features=6,
                                random_state=42)
@@ -35,8 +35,7 @@ def test_calibration():
     X -= X.min()  # MultinomialNB only allows positive X
 
     # split train and test
-    X_train, y_train, sw_train = \
-        X[:n_samples], y[:n_samples], sample_weight[:n_samples]
+    X_train, y_train, sw_train =        X[:n_samples], y[:n_samples], sample_weight[:n_samples]
     X_test, y_test = X[n_samples:], y[n_samples:]
 
     # Naive-Bayes
@@ -76,8 +75,7 @@ def test_calibration():
             # Check invariance against relabeling [0, 1] -> [1, 0]
             pc_clf.fit(this_X_train, (y_train + 1) % 2,
                        sample_weight=sw_train)
-            prob_pos_pc_clf_relabeled = \
-                pc_clf.predict_proba(this_X_test)[:, 1]
+            prob_pos_pc_clf_relabeled =                pc_clf.predict_proba(this_X_test)[:, 1]
             if method == "sigmoid":
                 assert_array_almost_equal(prob_pos_pc_clf,
                                           1 - prob_pos_pc_clf_relabeled)
@@ -95,8 +93,7 @@ def test_calibration():
 
         # base-estimators should provide either decision_function or
         # predict_proba (most regressors, for instance, should fail)
-        clf_base_regressor = \
-            CalibratedClassifierCV(RandomForestRegressor(), method="sigmoid")
+        clf_base_regressor =            CalibratedClassifierCV(RandomForestRegressor(), method="sigmoid")
         assert_raises(RuntimeError, clf_base_regressor.fit, X_train, y_train)
 
 
@@ -106,8 +103,7 @@ def test_sample_weight():
                                random_state=42)
 
     sample_weight = np.random.RandomState(seed=42).uniform(size=len(y))
-    X_train, y_train, sw_train = \
-        X[:n_samples], y[:n_samples], sample_weight[:n_samples]
+    X_train, y_train, sw_train =        X[:n_samples], y[:n_samples], sample_weight[:n_samples]
     X_test = X[n_samples:]
 
     for method in ['sigmoid', 'isotonic']:
@@ -126,7 +122,7 @@ def test_sample_weight():
 
 
 def test_calibration_multiclass():
-    """Test calibration for multiclass """
+    # --
     # test multi-class setting with classifier that implements
     # only decision function
     clf = LinearSVC()
@@ -155,8 +151,7 @@ def test_calibration_multiclass():
             e = np.exp(-y_pred)
             return e / e.sum(axis=1).reshape(-1, 1)
 
-        uncalibrated_log_loss = \
-            log_loss(y_test, softmax(clf.decision_function(X_test)))
+        uncalibrated_log_loss =            log_loss(y_test, softmax(clf.decision_function(X_test)))
         calibrated_log_loss = log_loss(y_test, probas)
         assert_greater_equal(uncalibrated_log_loss, calibrated_log_loss)
 
@@ -181,7 +176,7 @@ def test_calibration_multiclass():
 
 
 def test_calibration_prefit():
-    """Test calibration for prefitted classifiers"""
+    # --
     n_samples = 50
     X, y = make_classification(n_samples=3 * n_samples, n_features=6,
                                random_state=42)
@@ -190,11 +185,8 @@ def test_calibration_prefit():
     X -= X.min()  # MultinomialNB only allows positive X
 
     # split train and test
-    X_train, y_train, sw_train = \
-        X[:n_samples], y[:n_samples], sample_weight[:n_samples]
-    X_calib, y_calib, sw_calib = \
-        X[n_samples:2 * n_samples], y[n_samples:2 * n_samples], \
-        sample_weight[n_samples:2 * n_samples]
+    X_train, y_train, sw_train =        X[:n_samples], y[:n_samples], sample_weight[:n_samples]
+    X_calib, y_calib, sw_calib =        X[n_samples:2 * n_samples], y[n_samples:2 * n_samples],        sample_weight[n_samples:2 * n_samples]
     X_test, y_test = X[2 * n_samples:], y[2 * n_samples:]
 
     # Naive-Bayes
@@ -222,7 +214,7 @@ def test_calibration_prefit():
 
 
 def test_sigmoid_calibration():
-    """Test calibration values with Platt sigmoid model"""
+    # --
     exF = np.array([5, -4, 1.0])
     exY = np.array([1, -1, -1])
     # computed from my python port of the C++ code in LibSVM
@@ -240,12 +232,11 @@ def test_sigmoid_calibration():
 
 
 def test_calibration_curve():
-    """Check calibration_curve function"""
+    # --
     y_true = np.array([0, 0, 0, 1, 1, 1])
     y_pred = np.array([0., 0.1, 0.2, 0.8, 0.9, 1.])
     prob_true, prob_pred = calibration_curve(y_true, y_pred, n_bins=2)
-    prob_true_unnormalized, prob_pred_unnormalized = \
-        calibration_curve(y_true, y_pred * 2, n_bins=2, normalize=True)
+    prob_true_unnormalized, prob_pred_unnormalized =        calibration_curve(y_true, y_pred * 2, n_bins=2, normalize=True)
     assert_equal(len(prob_true), len(prob_pred))
     assert_equal(len(prob_true), 2)
     assert_almost_equal(prob_true, [0, 1])
@@ -260,7 +251,7 @@ def test_calibration_curve():
 
 
 def test_calibration_nan_imputer():
-    """Test that calibration can accept nan"""
+    # --
     X, y = make_classification(n_samples=10, n_features=2,
                                n_informative=2, n_redundant=0,
                                random_state=42)
@@ -298,8 +289,7 @@ def test_calibration_less_classes():
     cal_clf = CalibratedClassifierCV(clf, method="sigmoid", cv=LeaveOneOut())
     cal_clf.fit(X, y)
 
-    for i, calibrated_classifier in \
-            enumerate(cal_clf.calibrated_classifiers_):
+    for i, calibrated_classifier in            enumerate(cal_clf.calibrated_classifiers_):
         proba = calibrated_classifier.predict_proba(X)
         assert_array_equal(proba[:, i], np.zeros(len(y)))
         assert_equal(np.all(np.hstack([proba[:, :i],

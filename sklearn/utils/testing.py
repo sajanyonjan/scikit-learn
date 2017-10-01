@@ -1,4 +1,4 @@
-"""Testing utilities."""
+# --
 
 # Copyright (c) 2011, 2012
 # Authors: Pietro Berkes,
@@ -114,26 +114,7 @@ assert_raises_regexp = assert_raises_regex
 
 
 def assert_warns(warning_class, func, *args, **kw):
-    """Test that a certain warning occurs.
-
-    Parameters
-    ----------
-    warning_class : the warning class
-        The class to test for, e.g. UserWarning.
-
-    func : callable
-        Calable object to trigger warnings.
-
-    *args : the positional arguments to `func`.
-
-    **kw : the keyword arguments to `func`
-
-    Returns
-    -------
-
-    result : the return value of `func`
-
-    """
+    # --
     # very important to avoid uncontrolled state propagation
     clean_warning_registry()
     with warnings.catch_warnings(record=True) as w:
@@ -160,31 +141,7 @@ def assert_warns(warning_class, func, *args, **kw):
 
 def assert_warns_message(warning_class, message, func, *args, **kw):
     # very important to avoid uncontrolled state propagation
-    """Test that a certain warning occurs and with a certain message.
-
-    Parameters
-    ----------
-    warning_class : the warning class
-        The class to test for, e.g. UserWarning.
-
-    message : str | callable
-        The entire message or a substring to  test for. If callable,
-        it takes a string as argument and will trigger an assertion error
-        if it returns `False`.
-
-    func : callable
-        Calable object to trigger warnings.
-
-    *args : the positional arguments to `func`.
-
-    **kw : the keyword arguments to `func`.
-
-    Returns
-    -------
-
-    result : the return value of `func`
-
-    """
+    # --
     clean_warning_registry()
     with warnings.catch_warnings(record=True) as w:
         # Cause all warnings to always be triggered.
@@ -249,29 +206,7 @@ def assert_no_warnings(func, *args, **kw):
 
 
 def ignore_warnings(obj=None, category=Warning):
-    """Context manager and decorator to ignore warnings.
-
-    Note. Using this (in both variants) will clear all warnings
-    from all python modules loaded. In case you need to test
-    cross-module-warning-logging this is not your tool of choice.
-
-    Parameters
-    ----------
-    category : warning class, defaults to Warning.
-        The category to filter. If Warning, all categories will be muted.
-
-    Examples
-    --------
-    >>> with ignore_warnings():
-    ...     warnings.warn('buhuhuhu')
-
-    >>> def nasty_warn():
-    ...    warnings.warn('buhuhuhu')
-    ...    print(42)
-
-    >>> ignore_warnings(nasty_warn)()
-    42
-    """
+    # --
     if callable(obj):
         return _IgnoreWarnings(category=category)(obj)
     else:
@@ -279,17 +214,7 @@ def ignore_warnings(obj=None, category=Warning):
 
 
 class _IgnoreWarnings(object):
-    """Improved and simplified Python warnings context manager and decorator.
-
-    This class allows to ignore the warnings raise by a function.
-    Copied from Python 2.7.5 and modified as required.
-
-    Parameters
-    ----------
-    category : tuple of warning class, default to Warning
-        The category to filter. By default, all the categories will be muted.
-
-    """
+    # --
 
     def __init__(self, category):
         self._record = True
@@ -299,7 +224,7 @@ class _IgnoreWarnings(object):
         self.category = category
 
     def __call__(self, fn):
-        """Decorator to catch and hide warnings without visual nesting."""
+        # --
         @wraps(fn)
         def wrapper(*args, **kwargs):
             # very important to avoid uncontrolled state propagation
@@ -344,20 +269,7 @@ assert_greater = _dummy.assertGreater
 assert_allclose = np.testing.assert_allclose
 
 def assert_raise_message(exceptions, message, function, *args, **kwargs):
-    """Helper function to test error messages in exceptions.
-
-    Parameters
-    ----------
-    exceptions : exception or tuple of exception
-        Name of the estimator
-
-    function : callable
-        Calable object to raise error
-
-    *args : the positional arguments to `function`.
-
-    **kw : the keyword arguments to `function`
-    """
+    # --
     try:
         function(*args, **kwargs)
     except exceptions as e:
@@ -378,30 +290,7 @@ def assert_raise_message(exceptions, message, function, *args, **kwargs):
 
 
 def assert_allclose_dense_sparse(x, y, rtol=1e-07, atol=1e-9, err_msg=''):
-    """Assert allclose for sparse and dense data.
-
-    Both x and y need to be either sparse or dense, they
-    can't be mixed.
-
-    Parameters
-    ----------
-    x : array-like or sparse matrix
-        First array to compare.
-
-    y : array-like or sparse matrix
-        Second array to compare.
-
-    rtol : float, optional
-        relative tolerance; see numpy.allclose
-
-    atol : float, optional
-        absolute tolerance; see numpy.allclose. Note that the default here is
-        more tolerant than the default for numpy.testing.assert_allclose, where
-        atol=0.
-
-    err_msg : string, default=''
-        Error message to raise.
-    """
+    # --
     if sp.sparse.issparse(x) and sp.sparse.issparse(y):
         x = x.tocsr()
         y = y.tocsr()
@@ -419,27 +308,7 @@ def assert_allclose_dense_sparse(x, y, rtol=1e-07, atol=1e-9, err_msg=''):
 
 
 def fake_mldata(columns_dict, dataname, matfile, ordering=None):
-    """Create a fake mldata data set.
-
-    Parameters
-    ----------
-    columns_dict : dict, keys=str, values=ndarray
-        Contains data as columns_dict[column_name] = array of data.
-
-    dataname : string
-        Name of data set.
-
-    matfile : string or file object
-        The file name string or the file-like object of the output file.
-
-    ordering : list, default None
-        List of column_names, determines the ordering in the data set.
-
-    Notes
-    -----
-    This function transposes all arrays, while fetch_mldata only transposes
-    'data', keep that into account in the tests.
-    """
+    # --
     datasets = dict(columns_dict)
 
     # transpose all variables
@@ -461,18 +330,7 @@ def fake_mldata(columns_dict, dataname, matfile, ordering=None):
 class mock_mldata_urlopen(object):
 
     def __init__(self, mock_datasets):
-        """Object that mocks the urlopen function to fake requests to mldata.
-
-        `mock_datasets` is a dictionary of {dataset_name: data_dict}, or
-        {dataset_name: (data_dict, ordering).
-        `data_dict` itself is a dictionary of {column_name: data_array},
-        and `ordering` is a list of column_names to determine the ordering
-        in the data set (see `fake_mldata` for details).
-
-        When requesting a dataset with a name that is in mock_datasets,
-        this object creates a fake dataset in a StringIO object and
-        returns it. Otherwise, it raises an HTTPError.
-        """
+        # --
         self.mock_datasets = mock_datasets
 
     def __call__(self, urlname):
@@ -537,42 +395,7 @@ DONT_TEST = ['SparseCoder', 'EllipticEnvelope', 'DictVectorizer',
 def all_estimators(include_meta_estimators=False,
                    include_other=False, type_filter=None,
                    include_dont_test=False):
-    """Get a list of all estimators from sklearn.
-
-    This function crawls the module and gets all classes that inherit
-    from BaseEstimator. Classes that are defined in test-modules are not
-    included.
-    By default meta_estimators such as GridSearchCV are also not included.
-
-    Parameters
-    ----------
-    include_meta_estimators : boolean, default=False
-        Whether to include meta-estimators that can be constructed using
-        an estimator as their first argument. These are currently
-        BaseEnsemble, OneVsOneClassifier, OutputCodeClassifier,
-        OneVsRestClassifier, RFE, RFECV.
-
-    include_other : boolean, default=False
-        Wether to include meta-estimators that are somehow special and can
-        not be default-constructed sensibly. These are currently
-        Pipeline, FeatureUnion and GridSearchCV
-
-    include_dont_test : boolean, default=False
-        Whether to include "special" label estimator or test processors.
-
-    type_filter : string, list of string,  or None, default=None
-        Which kind of estimators should be returned. If None, no filter is
-        applied and all estimators are returned.  Possible values are
-        'classifier', 'regressor', 'cluster' and 'transformer' to get
-        estimators only of these specific types, or a list of these to
-        get the estimators that fit at least one of the types.
-
-    Returns
-    -------
-    estimators : list of tuples
-        List of (name, class), where ``name`` is the class name as string
-        and ``class`` is the actuall type of the class.
-    """
+    # --
     def is_abstract(c):
         if not(hasattr(c, '__abstractmethods__')):
             return False
@@ -636,14 +459,13 @@ def all_estimators(include_meta_estimators=False,
 
 
 def set_random_state(estimator, random_state=0):
-    """Set random state of an estimator if it has the `random_state` param.
-    """
+    # --
     if "random_state" in estimator.get_params():
         estimator.set_params(random_state=random_state)
 
 
 def if_matplotlib(func):
-    """Test decorator that skips test if matplotlib not installed."""
+    # --
     @wraps(func)
     def run_test(*args, **kwargs):
         try:
@@ -660,7 +482,7 @@ def if_matplotlib(func):
 
 
 def skip_if_32bit(func):
-    """Test decorator that skips tests on 32bit platforms."""
+    # --
     @wraps(func)
     def run_test(*args, **kwargs):
         bits = 8 * struct.calcsize("P")
@@ -672,24 +494,7 @@ def skip_if_32bit(func):
 
 
 def if_safe_multiprocessing_with_blas(func):
-    """Decorator for tests involving both BLAS calls and multiprocessing.
-
-    Under POSIX (e.g. Linux or OSX), using multiprocessing in conjunction with
-    some implementation of BLAS (or other libraries that manage an internal
-    posix thread pool) can cause a crash or a freeze of the Python process.
-
-    In practice all known packaged distributions (from Linux distros or
-    Anaconda) of BLAS under Linux seems to be safe. So we this problem seems to
-    only impact OSX users.
-
-    This wrapper makes it possible to skip tests that can possibly cause
-    this crash under OS X with.
-
-    Under Python 3.4+ it is possible to use the `forkserver` start method
-    for multiprocessing to avoid this issue. However it can cause pickling
-    errors on interactively defined functions. It therefore not enabled by
-    default.
-    """
+    # --
     @wraps(func)
     def run_test(*args, **kwargs):
         if sys.platform == 'darwin':
@@ -700,7 +505,7 @@ def if_safe_multiprocessing_with_blas(func):
 
 
 def clean_warning_registry():
-    """Safe way to reset warnings."""
+    # --
     warnings.resetwarnings()
     reg = "__warningregistry__"
     for mod_name, mod in list(sys.modules.items()):
@@ -716,16 +521,13 @@ def check_skip_network():
 
 
 def check_skip_travis():
-    """Skip test if being run on Travis."""
+    # --
     if os.environ.get('TRAVIS') == "true":
         raise SkipTest("This test needs to be skipped on Travis")
 
 
 def _delete_folder(folder_path, warn=False):
-    """Utility function to cleanup a temporary folder if still existing.
-
-    Copy from joblib.pool (for independence).
-    """
+    # --
     try:
         if os.path.exists(folder_path):
             # This can fail under windows,
@@ -754,15 +556,7 @@ class TempMemmap(object):
 
 
 class _named_check(object):
-    """Wraps a check to show a useful description
-
-    Parameters
-    ----------
-    check : function
-        Must have ``__name__`` and ``__call__``
-    arg_text : str
-        A summary of arguments to the check
-    """
+    # --
     # Setting the description on the function itself can give incorrect results
     # in failing tests
     def __init__(self, check, arg_text):
@@ -777,7 +571,7 @@ class _named_check(object):
 
 
 def _get_args(function, varargs=False):
-    """Helper to get function arguments"""
+    # --
     # NOTE this works only in python3.5
     if sys.version_info < (3, 5):
         NotImplementedError("_get_args is not available for python < 3.5")
@@ -796,21 +590,7 @@ def _get_args(function, varargs=False):
 
 
 def _get_func_name(func, class_name=None):
-    """Get function full name
-
-    Parameters
-    ----------
-    func : callable
-        The function object.
-    class_name : string, optional (default: None)
-       If ``func`` is a class method and the class name is known specify
-       class_name for the error message.
-
-    Returns
-    -------
-    name : str
-        The function name.
-    """
+    # --
     parts = []
     module = inspect.getmodule(func)
     if module:
@@ -825,25 +605,7 @@ def _get_func_name(func, class_name=None):
 
 
 def check_docstring_parameters(func, doc=None, ignore=None, class_name=None):
-    """Helper to check docstring
-
-    Parameters
-    ----------
-    func : callable
-        The function object to test.
-    doc : str, optional (default: None)
-        Docstring if it is passed manually to the test.
-    ignore : None | list
-        Parameters to ignore.
-    class_name : string, optional (default: None)
-       If ``func`` is a class method and the class name is known specify
-       class_name for the error message.
-
-    Returns
-    -------
-    incorrect : list
-        A list of string describing the incorrect results.
-    """
+    # --
     from numpydoc import docscrape
     incorrect = []
     ignore = [] if ignore is None else ignore

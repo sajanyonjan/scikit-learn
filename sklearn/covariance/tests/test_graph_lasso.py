@@ -1,5 +1,4 @@
-""" Test the graph_lasso module.
-"""
+# --
 import sys
 
 import numpy as np

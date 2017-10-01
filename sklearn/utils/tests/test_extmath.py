@@ -155,8 +155,7 @@ def check_randomized_svd_low_rank(dtype):
         X = sparse.csr_matrix(X)
 
         # compute the singular values of X using the fast approximate method
-        Ua, sa, Va = \
-            randomized_svd(X, k, power_iteration_normalizer=normalizer,
+        Ua, sa, Va =            randomized_svd(X, k, power_iteration_normalizer=normalizer,
                            random_state=0)
         if dtype.kind == 'f':
             assert Ua.dtype == dtype
@@ -404,10 +403,7 @@ def test_randomized_svd_sign_flip_with_transpose():
     # See https://github.com/scikit-learn/scikit-learn/issues/5608
     # for more details.
     def max_loading_is_positive(u, v):
-        """
-        returns bool tuple indicating if the values maximising np.abs
-        are positive across all rows for u and across all columns for v.
-        """
+        # --
         u_based = (np.abs(u).max(axis=0) == u.max(axis=0)).all()
         v_based = (np.abs(v).max(axis=1) == v.max(axis=1)).all()
         return u_based, v_based
@@ -481,8 +477,7 @@ def test_incremental_variance_update_formulas():
     old_means = X1.mean(axis=0)
     old_variances = X1.var(axis=0)
     old_sample_count = X1.shape[0]
-    final_means, final_variances, final_count = \
-        _incremental_mean_and_var(X2, old_means, old_variances,
+    final_means, final_variances, final_count =        _incremental_mean_and_var(X2, old_means, old_variances,
                                   old_sample_count)
     assert_almost_equal(final_means, A.mean(axis=0), 6)
     assert_almost_equal(final_variances, A.var(axis=0), 6)
@@ -520,8 +515,7 @@ def test_incremental_variance_numerical_stability():
         updated_sample_count = (last_sample_count + 1)
         samples_ratio = last_sample_count / float(updated_sample_count)
         updated_mean = x / updated_sample_count + last_mean * samples_ratio
-        updated_variance = last_variance * samples_ratio + \
-            (x - last_mean) * (x - updated_mean) / updated_sample_count
+        updated_variance = last_variance * samples_ratio +            (x - last_mean) * (x - updated_mean) / updated_sample_count
         return updated_mean, updated_variance, updated_sample_count
 
     # We want to show a case when one_pass_var has error > 1e-3 while
@@ -550,8 +544,7 @@ def test_incremental_variance_numerical_stability():
     # Naive implementation: >tol (436)
     mean, var, n = A0[0, :], np.zeros(n_features), n_samples // 2
     for i in range(A1.shape[0]):
-        mean, var, n = \
-            naive_mean_variance_update(A1[i, :], mean, var, n)
+        mean, var, n =            naive_mean_variance_update(A1[i, :], mean, var, n)
     assert_equal(n, A.shape[0])
     # the mean is also slightly unstable
     assert_greater(np.abs(A.mean(axis=0) - mean).max(), 1e-6)
@@ -560,8 +553,7 @@ def test_incremental_variance_numerical_stability():
     # Robust implementation: <tol (177)
     mean, var, n = A0[0, :], np.zeros(n_features), n_samples // 2
     for i in range(A1.shape[0]):
-        mean, var, n = \
-            _incremental_mean_and_var(A1[i, :].reshape((1, A1.shape[1])),
+        mean, var, n =            _incremental_mean_and_var(A1[i, :].reshape((1, A1.shape[1])),
                                       mean, var, n)
     assert_equal(n, A.shape[0])
     assert_array_almost_equal(A.mean(axis=0), mean)

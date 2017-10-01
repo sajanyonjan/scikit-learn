@@ -110,8 +110,7 @@ def test_incr_mean_variance_axis():
 
         # Test _incr_mean_and_var with a 1 row input
         X_means, X_vars = mean_variance_axis(X_csr, axis)
-        X_means_incr, X_vars_incr, n_incr = \
-            incr_mean_variance_axis(X_csr, axis, last_mean, last_var, last_n)
+        X_means_incr, X_vars_incr, n_incr =            incr_mean_variance_axis(X_csr, axis, last_mean, last_var, last_n)
         assert_array_almost_equal(X_means, X_means_incr)
         assert_array_almost_equal(X_vars, X_vars_incr)
         assert_equal(X.shape[axis], n_incr)  # X.shape[axis] picks # samples
@@ -137,8 +136,7 @@ def test_incr_mean_variance_axis():
             for X_sparse in (X_csr, X_csc):
                 X_sparse = X_sparse.astype(input_dtype)
                 X_means, X_vars = mean_variance_axis(X_sparse, axis)
-                X_means_incr, X_vars_incr, n_incr = \
-                    incr_mean_variance_axis(X_sparse, axis, last_mean,
+                X_means_incr, X_vars_incr, n_incr =                    incr_mean_variance_axis(X_sparse, axis, last_mean,
                                             last_var, last_n)
                 assert_equal(X_means_incr.dtype, output_dtype)
                 assert_equal(X_vars_incr.dtype, output_dtype)

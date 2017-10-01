@@ -1,4 +1,4 @@
-"""Test the 20news downloader, if the data is available."""
+# --
 import numpy as np
 import scipy.sparse as sp
 
@@ -40,10 +40,7 @@ def test_20news():
 
 
 def test_20news_length_consistency():
-    """Checks the length consistencies within the bunch
-
-    This is a non-regression test for a bug present in 0.16.1.
-    """
+    # --
     try:
         data = datasets.fetch_20newsgroups(
             subset='all', download_if_missing=False, shuffle=False)

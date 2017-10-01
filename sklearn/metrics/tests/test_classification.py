@@ -54,11 +54,7 @@ from scipy.spatial.distance import hamming as sp_hamming
 
 
 def make_prediction(dataset=None, binary=False):
-    """Make some classification predictions on a toy dataset using a SVC
-
-    If binary is True restrict to a binary classification problem instead of a
-    multiclass classification problem
-    """
+    # --
 
     if dataset is None:
         # import some data to play with
@@ -654,7 +650,7 @@ def test_confusion_matrix_multiclass():
 
 
 def test_confusion_matrix_sample_weight():
-    """Test confusion matrix - case with sample_weight"""
+    # --
     y_true, y_pred, _ = make_prediction(binary=False)
 
     weights = [.1] * 25 + [.2] * 25 + [.3] * 25

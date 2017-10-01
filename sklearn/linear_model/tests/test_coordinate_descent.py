@@ -22,9 +22,7 @@ from sklearn.utils.testing import ignore_warnings
 from sklearn.utils.testing import assert_array_equal
 from sklearn.utils.testing import TempMemmap
 
-from sklearn.linear_model.coordinate_descent import Lasso, \
-    LassoCV, ElasticNet, ElasticNetCV, MultiTaskLasso, MultiTaskElasticNet, \
-    MultiTaskElasticNetCV, MultiTaskLassoCV, lasso_path, enet_path
+from sklearn.linear_model.coordinate_descent import Lasso,    LassoCV, ElasticNet, ElasticNetCV, MultiTaskLasso, MultiTaskElasticNet,    MultiTaskElasticNetCV, MultiTaskLassoCV, lasso_path, enet_path
 from sklearn.linear_model import LassoLarsCV, lars_path
 from sklearn.utils import check_array
 
@@ -128,10 +126,7 @@ def test_enet_toy():
 
 def build_dataset(n_samples=50, n_features=200, n_informative_features=10,
                   n_targets=1):
-    """
-    build an ill-posed linear regression problem with many noisy features and
-    comparatively few samples
-    """
+    # --
     random_state = np.random.RandomState(0)
     if n_targets > 1:
         w = random_state.randn(n_features, n_targets)

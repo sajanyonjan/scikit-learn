@@ -1,4 +1,4 @@
-"""Testing for Gaussian process regression """
+# --
 
 # Author: Jan Hendrik Metzen <jhm@informatik.uni-bremen.de>
 # License: BSD 3 clause
@@ -8,12 +8,10 @@ import numpy as np
 from scipy.optimize import approx_fprime
 
 from sklearn.gaussian_process import GaussianProcessRegressor
-from sklearn.gaussian_process.kernels \
-    import RBF, ConstantKernel as C, WhiteKernel
+from sklearn.gaussian_process.kernels    import RBF, ConstantKernel as C, WhiteKernel
 from sklearn.gaussian_process.kernels import DotProduct
 
-from sklearn.utils.testing \
-    import (assert_true, assert_greater, assert_array_less,
+from sklearn.utils.testing    import (assert_true, assert_greater, assert_array_less,
             assert_almost_equal, assert_equal, assert_raise_message,
             assert_array_almost_equal, assert_array_equal)
 
@@ -74,8 +72,7 @@ def test_converged_to_local_maximum():
             continue
         gpr = GaussianProcessRegressor(kernel=kernel).fit(X, y)
 
-        lml, lml_gradient = \
-            gpr.log_marginal_likelihood(gpr.kernel_.theta, True)
+        lml, lml_gradient =            gpr.log_marginal_likelihood(gpr.kernel_.theta, True)
 
         assert_true(np.all((np.abs(lml_gradient) < 1e-4) |
                            (gpr.kernel_.theta == gpr.kernel_.bounds[:, 0]) |
@@ -104,8 +101,7 @@ def test_lml_gradient():
         gpr = GaussianProcessRegressor(kernel=kernel).fit(X, y)
 
         lml, lml_gradient = gpr.log_marginal_likelihood(kernel.theta, True)
-        lml_gradient_approx = \
-            approx_fprime(kernel.theta,
+        lml_gradient_approx =            approx_fprime(kernel.theta,
                           lambda theta: gpr.log_marginal_likelihood(theta,
                                                                     False),
                           1e-10)
@@ -180,13 +176,10 @@ def test_random_starts():
     n_samples, n_features = 25, 2
     rng = np.random.RandomState(0)
     X = rng.randn(n_samples, n_features) * 2 - 1
-    y = np.sin(X).sum(axis=1) + np.sin(3 * X).sum(axis=1) \
-        + rng.normal(scale=0.1, size=n_samples)
+    y = np.sin(X).sum(axis=1) + np.sin(3 * X).sum(axis=1)        + rng.normal(scale=0.1, size=n_samples)
 
-    kernel = C(1.0, (1e-2, 1e2)) \
-        * RBF(length_scale=[1.0] * n_features,
-              length_scale_bounds=[(1e-4, 1e+2)] * n_features) \
-        + WhiteKernel(noise_level=1e-5, noise_level_bounds=(1e-5, 1e1))
+    kernel = C(1.0, (1e-2, 1e2))        * RBF(length_scale=[1.0] * n_features,
+              length_scale_bounds=[(1e-4, 1e+2)] * n_features)        + WhiteKernel(noise_level=1e-5, noise_level_bounds=(1e-5, 1e1))
     last_lml = -np.inf
     for n_restarts_optimizer in range(5):
         gp = GaussianProcessRegressor(
@@ -273,8 +266,7 @@ def test_custom_optimizer():
     # Define a dummy optimizer that simply tests 50 random hyperparameters
     def optimizer(obj_func, initial_theta, bounds):
         rng = np.random.RandomState(0)
-        theta_opt, func_min = \
-            initial_theta, obj_func(initial_theta, eval_gradient=False)
+        theta_opt, func_min =            initial_theta, obj_func(initial_theta, eval_gradient=False)
         for _ in range(50):
             theta = np.atleast_1d(rng.uniform(np.maximum(-2, bounds[:, 0]),
                                               np.minimum(1, bounds[:, 1])))
@@ -309,10 +301,8 @@ def test_gpr_correct_error_message():
 def test_duplicate_input():
     # Test GPR can handle two different output-values for the same input.
     for kernel in kernels:
-        gpr_equal_inputs = \
-            GaussianProcessRegressor(kernel=kernel, alpha=1e-2)
-        gpr_similar_inputs = \
-            GaussianProcessRegressor(kernel=kernel, alpha=1e-2)
+        gpr_equal_inputs =            GaussianProcessRegressor(kernel=kernel, alpha=1e-2)
+        gpr_similar_inputs =            GaussianProcessRegressor(kernel=kernel, alpha=1e-2)
 
         X_ = np.vstack((X, X[0]))
         y_ = np.hstack((y, y[0] + 1))
@@ -323,10 +313,8 @@ def test_duplicate_input():
         gpr_similar_inputs.fit(X_, y_)
 
         X_test = np.linspace(0, 10, 100)[:, None]
-        y_pred_equal, y_std_equal = \
-            gpr_equal_inputs.predict(X_test, return_std=True)
-        y_pred_similar, y_std_similar = \
-            gpr_similar_inputs.predict(X_test, return_std=True)
+        y_pred_equal, y_std_equal =            gpr_equal_inputs.predict(X_test, return_std=True)
+        y_pred_similar, y_std_similar =            gpr_similar_inputs.predict(X_test, return_std=True)
 
         assert_almost_equal(y_pred_equal, y_pred_similar)
         assert_almost_equal(y_std_equal, y_std_similar)
