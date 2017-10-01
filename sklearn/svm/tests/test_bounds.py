@@ -30,9 +30,9 @@ def test_l1_min_c():
                 for intercept_label, intercept_params in intercepts.items():
                     check = lambda: check_l1_min_c(X, Y, loss,
                                                    **intercept_params)
-                    check.description = ('Test l1_min_c loss=%r %s %s %s' %
-                                         (loss, X_label, Y_label,
-                                          intercept_label))
+                    # check.description = ('Test l1_min_c loss=%r %s %s %s' %
+                    #                      (loss, X_label, Y_label,
+                    #                       intercept_label))
                     yield check
 
     # loss='l2' should raise ValueError
