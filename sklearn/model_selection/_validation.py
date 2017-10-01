@@ -1335,10 +1335,9 @@ def _aggregate_score_dicts(scores):
     -------
 
     >>> scores = [{'a': 1, 'b':10}, {'a': 2, 'b':2}, {'a': 3, 'b':3},
-    ...           {'a': 10, 'b': 10}]                         # doctest: +SKIP
-    >>> _aggregate_score_dicts(scores)                        # doctest: +SKIP
-    {'a': array([1, 2, 3, 10]),
-     'b': array([10, 2, 3, 10])}
+    ...           {'a': 10, 'b': 10}]
+    >>> _aggregate_score_dicts(scores)
+    {'a': array([ 1,  2,  3, 10]), 'b': array([10,  2,  3, 10])}
     """
     out = {}
     for key in scores[0]:
