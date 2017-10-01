@@ -24,7 +24,7 @@ from sklearn.utils.validation import check_X_y, check_array
 
 
 class CorrectNotFittedError(ValueError):
-    # --
+    pass
 
 
 class BaseBadClassifier(BaseEstimator, ClassifierMixin):

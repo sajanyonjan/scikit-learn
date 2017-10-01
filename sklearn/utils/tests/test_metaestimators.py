@@ -13,8 +13,7 @@ class MockMetaEstimator(object):
 
     @if_delegate_has_method(delegate="a_prefix")
     def func(self):
-        # --
-        pass
+        "This is a mock delegated function"
 
 
 def test_delegated_docstring():
