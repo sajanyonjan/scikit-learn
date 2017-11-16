@@ -779,7 +779,7 @@ def test_bh_match_exact():
 
 
 def test_tsne_with_different_distance_metrics():
-    """Make sure that TSNE works for different distance metrics"""
+    # --
     random_state = check_random_state(0)
     n_components_original = 3
     n_components_embedding = 2
