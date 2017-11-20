@@ -28,6 +28,7 @@ run_tests() {
     mkdir -p $TEST_DIR
     # We need the setup.cfg for the pytest settings
     cp setup.cfg $TEST_DIR
+    cp conftest.py $TEST_DIR
     cd $TEST_DIR
 
     # Skip tests that require large downloads over the network to save bandwidth
