@@ -32,6 +32,12 @@ from sklearn.utils.estimator_checks import (
     check_no_fit_attributes_set_in_init,
     check_class_weight_balanced_linear_classifier)
 
+from sklearn.exceptions import ConvergenceWarning
+
+
+import pytest
+# pytestmark = pytest.mark.filterwarnings('ignore')
+
 
 def test_all_estimator_no_base_class():
     # test that all_estimators doesn't find abstract classes.
@@ -54,7 +60,7 @@ def test_all_estimators():
         # some can just not be sensibly default constructed
         yield check_parameters_default_constructible, name, Estimator
 
-
+@pytest.mark.filterwarnings('ignore')
 def test_non_meta_estimators():
     # input validation etc for non-meta estimators
     estimators = all_estimators()
@@ -64,12 +70,28 @@ def test_non_meta_estimators():
         if name.startswith("_"):
             continue
         estimator = Estimator()
+        ignore_convergence_warnings = ignore_warnings()
+            # category=ConvergenceWarning)
+        # import pytest
+        # ignore_convergence_warnings = pytest.mark.filterwarnings(
+        #     'ignore')
+
+        # warnings.simplefilter('ignore')
+        # def bob():
+        #     warnings.warn('bob')
+
+        # bob()
+        # ignore_convergence_warnings(bob)()
+
         # check this on class
-        yield check_no_fit_attributes_set_in_init, name, Estimator
+        yield (
+            ignore_convergence_warnings(check_no_fit_attributes_set_in_init),
+            name, Estimator)
 
         for check in _yield_all_checks(name, estimator):
             set_checking_parameters(estimator)
-            yield check, name, estimator
+            yield (ignore_convergence_warnings(check),
+                   name, estimator)
 
 
 def test_configure():
@@ -162,3 +184,8 @@ def test_all_tests_are_importable():
                  '{0} do not have `tests` subpackages. Perhaps they require '
                  '__init__.py or an add_subpackage directive in the parent '
                  'setup.py'.format(missing_tests))
+
+
+def test_boo():
+    import warnings
+    warnings.warn('boo', RuntimeWarning)
