@@ -4,6 +4,10 @@ from numpy import linalg
 from scipy.sparse import dok_matrix, csr_matrix, issparse
 from scipy.spatial.distance import cosine, cityblock, minkowski, wminkowski
 
+import Cython
+
+from pytest import raises
+
 from sklearn.utils.testing import assert_greater
 from sklearn.utils.testing import assert_array_almost_equal
 from sklearn.utils.testing import assert_almost_equal
@@ -42,6 +46,8 @@ from sklearn.metrics.pairwise import paired_euclidean_distances
 from sklearn.metrics.pairwise import paired_manhattan_distances
 from sklearn.preprocessing import normalize
 from sklearn.exceptions import DataConversionWarning
+
+CYTHON_DEV = '0.28' in Cython.__version__
 
 
 def test_pairwise_distances():
@@ -713,3 +719,30 @@ def test_check_preserve_type():
                                                    XB.astype(np.float))
     assert_equal(XA_checked.dtype, np.float)
     assert_equal(XB_checked.dtype, np.float)
+
+
+def test_sparse_manhattan_read_only():
+    arr = np.ones((5, 5))
+    arr.flags.writeable = False
+    m1 = csr_matrix(arr)
+    m2 = csr_matrix(arr)
+    m1.data.flags.writeable = False
+    m2.data.flags.writeable = False
+    if CYTHON_DEV:
+        manhattan_distances(m1, m2)
+    else:
+        with raises(ValueError, match='read-only'):
+            manhattan_distances(m1, m2)
+
+
+def test_chi2_kernel_read_only():
+    arr = np.ones((5, 5))
+    arr.flags.writeable = False
+    if CYTHON_DEV:
+        chi2_kernel(arr)
+        additive_chi2_kernel(arr)
+    else:
+        with raises(ValueError, match='read-only'):
+            chi2_kernel(arr)
+        with raises(ValueError, match='read-only'):
+            additive_chi2_kernel(arr)

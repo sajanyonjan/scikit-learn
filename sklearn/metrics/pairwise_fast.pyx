@@ -17,20 +17,27 @@ cdef extern from "cblas.h":
 ctypedef float [:, :] float_array_2d_t
 ctypedef double [:, :] double_array_2d_t
 
-cdef fused floating1d:
-    float[::1]
-    double[::1]
+ctypedef (const float) [:, :] const_float_array_2d_t
+ctypedef (const double) [:, :] const_double_array_2d_t
+
+cdef fused const_floating1d:
+    (const float)[::1]
+    (const double)[::1]
 
 cdef fused floating_array_2d_t:
     float_array_2d_t
     double_array_2d_t
 
+cdef fused const_floating_array_2d_t:
+    const_float_array_2d_t
+    const_double_array_2d_t
+
 
 np.import_array()
 
 
-def _chi2_kernel_fast(floating_array_2d_t X,
-                      floating_array_2d_t Y,
+def _chi2_kernel_fast(const_floating_array_2d_t X,
+                      const_floating_array_2d_t Y,
                       floating_array_2d_t result):
     cdef np.npy_intp i, j, k
     cdef np.npy_intp n_samples_X = X.shape[0]
@@ -50,8 +57,10 @@ def _chi2_kernel_fast(floating_array_2d_t X,
                 result[i, j] = -res
 
 
-def _sparse_manhattan(floating1d X_data, int[:] X_indices, int[:] X_indptr,
-                      floating1d Y_data, int[:] Y_indices, int[:] Y_indptr,
+def _sparse_manhattan(const_floating1d X_data, const int[:] X_indices,
+                      const int[:] X_indptr,
+                      const_floating1d Y_data, const int[:] Y_indices,
+                      const int[:] Y_indptr,
                       np.npy_intp n_features, double[:, ::1] D):
     """Pairwise L1 distances for CSR matrices.
 
