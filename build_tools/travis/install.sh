@@ -38,8 +38,7 @@ if [[ "$DISTRIB" == "conda" ]]; then
     conda update --yes conda
 
     TO_INSTALL="python=$PYTHON_VERSION pip pytest pytest-cov \
-                numpy=$NUMPY_VERSION scipy=$SCIPY_VERSION \
-                cython=$CYTHON_VERSION"
+                numpy=$NUMPY_VERSION scipy=$SCIPY_VERSION"
 
     if [[ "$INSTALL_MKL" == "true" ]]; then
         TO_INSTALL="$TO_INSTALL mkl"
@@ -71,8 +70,7 @@ elif [[ "$DISTRIB" == "ubuntu" ]]; then
     # and scipy
     virtualenv --system-site-packages testvenv
     source testvenv/bin/activate
-    pip install pytest pytest-cov cython==$CYTHON_VERSION
-
+    pip install pytest pytest-cov
 elif [[ "$DISTRIB" == "scipy-dev-wheels" ]]; then
     # Set up our own virtualenv environment to avoid travis' numpy.
     # This venv points to the python interpreter of the travis build
@@ -85,6 +83,12 @@ elif [[ "$DISTRIB" == "scipy-dev-wheels" ]]; then
     dev_url=https://7933911d6844c6c53a7d-47bd50c35cd79bd838daf386af554a83.ssl.cf2.rackcdn.com
     pip install --pre --upgrade --timeout=60 -f $dev_url numpy scipy pandas cython
     pip install pytest pytest-cov
+fi
+
+if [[ "$CYTHON_VERSION" != "dev" ]]; then
+    pip install cython==$CYTHON_VERSION
+else
+    pip install git+https://github.com/cython/cython.git
 fi
 
 if [[ "$COVERAGE" == "true" ]]; then
