@@ -24,6 +24,10 @@ ctypedef void (*AXPY)(int N, floating alpha, floating *X, int incX,
                       floating *Y, int incY) nogil
 ctypedef floating (*ASUM)(int N, floating *X, int incX) nogil
 
+ctypedef fused const_floating:
+    const double
+    const float
+
 np.import_array()
 
 # The following two functions are shamelessly copied from the tree code.
@@ -319,10 +323,10 @@ def enet_coordinate_descent(np.ndarray[floating, ndim=1] w,
 @cython.cdivision(True)
 def sparse_enet_coordinate_descent(floating [:] w,
                             floating alpha, floating beta,
-                            np.ndarray[floating, ndim=1, mode='c'] X_data,
-                            np.ndarray[int, ndim=1, mode='c'] X_indices,
-                            np.ndarray[int, ndim=1, mode='c'] X_indptr,
-                            np.ndarray[floating, ndim=1] y,
+                            const double[::1] X_data,
+                            const int[::1] X_indices,
+                            const int[::1] X_indptr,
+                            const_floating[:] y,
                             floating[:] X_mean, int max_iter,
                             floating tol, object rng, bint random=0,
                             bint positive=0):
@@ -350,6 +354,7 @@ def sparse_enet_coordinate_descent(floating [:] w,
 
     # initial value of the residuals
     cdef floating[:] R = y.copy()
+    # R[:] = y
 
     cdef floating[:] X_T_R
     cdef floating[:] XtA
@@ -540,9 +545,9 @@ def sparse_enet_coordinate_descent(floating [:] w,
 @cython.wraparound(False)
 @cython.cdivision(True)
 def enet_coordinate_descent_gram(floating[:] w, floating alpha, floating beta,
-                                 np.ndarray[floating, ndim=2, mode='c'] Q,
-                                 np.ndarray[floating, ndim=1, mode='c'] q,
-                                 np.ndarray[floating, ndim=1] y,
+                                 const_floating[:, ::1] Q,
+                                 const_floating[::1] q,
+                                 const_floating[::1] y,
                                  int max_iter, floating tol, object rng,
                                  bint random=0, bint positive=0):
     """Cython version of the coordinate descent algorithm
