@@ -5,15 +5,17 @@ import numpy as np
 
 from sklearn.utils.testing import SkipTest
 from sklearn.utils.testing import check_skip_network
-from sklearn.datasets import get_data_home
+from sklearn import datasets
 from sklearn.utils.testing import install_mldata_mock
 from sklearn.utils.testing import uninstall_mldata_mock
 
 
 def setup_labeled_faces():
-    data_home = get_data_home()
-    if not exists(join(data_home, 'lfw_home')):
+    try:
+        datasets.fetch_lfw_people(download_if_missing=False)
+    except OSError:
         raise SkipTest("Skipping dataset loading doctests")
+
 
 
 def setup_mldata():
@@ -39,15 +41,16 @@ def teardown_mldata():
 
 def setup_rcv1():
     check_skip_network()
-    # skip the test in rcv1.rst if the dataset is not already loaded
-    rcv1_dir = join(get_data_home(), "RCV1")
-    if not exists(rcv1_dir):
-        raise SkipTest("Download RCV1 dataset to run this test.")
-
+    # skip the test in rcv1.rst if the dataset has not already been downloaded
+    try:
+        datasets.fetch_rcv1(download_if_missing=False)
+    except OSError:
+        raise SkipTest("Skipping dataset loading doctests")
 
 def setup_twenty_newsgroups():
-    data_home = get_data_home()
-    if not exists(join(data_home, '20news_home')):
+    try:
+        datasets.fetch_20newsgroups(download_if_missing=False)
+    except OSError:
         raise SkipTest("Skipping dataset loading doctests")
 
 
