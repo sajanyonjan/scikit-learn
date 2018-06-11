@@ -1,7 +1,7 @@
 # Requirements for running the examples
 numpy
 scipy
-scikit-learn
+https://github.com/scikit-learn/scikit-learn/archive/master.zip
 matplotlib
 pandas
 scikit-image
