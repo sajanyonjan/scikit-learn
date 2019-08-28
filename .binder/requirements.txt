@@ -1,7 +1,6 @@
---find-links https://sklearn-nightly.scdn8.secure.raxcdn.com scikit-learn
 matplotlib
 scikit-image
 pandas
 sphinx-gallery
-scikit-learn>=0.22.dev0
+scikit-learn==0.21.*
 
